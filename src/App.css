@@ -31,3 +31,92 @@
     transform: rotate(360deg);
   }
 }
+
+
+.ArticleContainer {
+  list-style: none;
+}
+
+.ArticleCount {
+  border-radius: 7px;
+  text-align: left;
+  background-color: rgb(255, 145, 2);
+  width: auto;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.Article {
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 12px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
+  /* background-color: rgb(250, 234, 143); */
+  color: darkblue;
+  width: 300px;
+  height: 300px;
+  /* margin-bottom: 20px;
+  padding-bottom: 20px;  */
+}
+
+.toolBoxContainer {
+  filter: drop-shadow(0 0 0.75rem rgb(1, 1, 2));
+  border-radius: 8px;
+  position: absolute;
+  top: var(--toolBoxTop);
+  left: var(--toolBoxLeft);
+  display: block;
+  width: 100px;
+  height: 170px;
+  background-color: rgb(116, 118, 129);
+     
+ 
+}
+
+.toolBoxText {
+  text-align: center;
+  font-size: 15px;
+  color: rgb(198, 233, 0);
+   
+}
+
+.displayContainer {
+  width: fill;
+  height: 3000px;
+
+}
+
+.button {
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.AddArticleContainer {
+  z-index: +1;
+  position: absolute;
+  top: 20px;
+  left: 30%;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255);
+  color: darkblue;
+  width: 400px;
+  height: 400px;
+
+
+}
+
+
+
+.HeadlineContainer {
+  z-index: +1;
+  position: absolute;
+  padding: 15px;
+  top: -15px;
+  left: 15px;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 5px;
+  background-color: rgb(250, 234, 143);
+  color: darkblue;
+}
