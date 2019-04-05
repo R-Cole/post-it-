@@ -7,6 +7,6 @@ Researching programmatic CSS.
 
 Current functionality: 
 
-* Move and psotion tool box
+* Move and position tool box
 * Add post
 * Move and position posts
