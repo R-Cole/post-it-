@@ -9,8 +9,8 @@ function ToolBox(props) {
       <div className='toolBoxContainer' onClick={(e)=>props.clickToEnable(e,handle)}>
        <p className='toolBoxText'>TOOLBOX</p>
        <br/>
-       <button className='button' onClick={(e)=> props.newArticle()}>ADD ARTICLE</button>
-       <button className='button' onClick={(e)=> props.newArticle()}>EDIT ARTICLE</button>
+       <button className='button' onClick={(e)=> props.newArticle()}>NEW POST</button>
+       <button className='button' onClick={(e)=> props.newArticle()}>EDIT POST</button>
       </div>
   
   

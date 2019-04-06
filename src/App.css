@@ -1,5 +1,14 @@
 .App {
+  
   text-align: center;
+  width: stretch;
+  height: stretch;
+  /* cursor: var(url(http://www.javascriptkit.com/dhtmltutors/cursor-hand.gif), auto); */
+  
+}
+
+body {
+  background-color: #3b4455;
 }
 
 .App-logo {
@@ -9,7 +18,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -38,10 +47,11 @@
 }
 
 .ArticleCount {
-  border-radius: 7px;
-  text-align: left;
+  position: relative;
+  top: -6px;
+  left: -132px;
+  border-radius: 5px;
   background-color: rgb(255, 145, 2);
-  width: auto;
   color: white;
   padding: 5px;
   font-size: 12px;
@@ -49,14 +59,10 @@
 
 .Article {
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
-  border-radius: 12px;
+  border-radius: 6px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
-  /* background-color: rgb(250, 234, 143); */
-  color: darkblue;
   width: 300px;
   height: 300px;
-  /* margin-bottom: 20px;
-  padding-bottom: 20px;  */
 }
 
 .toolBoxContainer {
@@ -69,8 +75,6 @@
   width: 100px;
   height: 170px;
   background-color: rgb(116, 118, 129);
-     
- 
 }
 
 .toolBoxText {
@@ -81,8 +85,10 @@
 }
 
 .displayContainer {
-  width: fill;
-  height: 3000px;
+  
+  cursor: var(--cursorHand);
+  width: stretch;
+  height: stretch;
 
 }
 
@@ -96,19 +102,47 @@
   z-index: +1;
   position: absolute;
   top: 20px;
-  left: 30%;
+  left: 300px;
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
-  border-radius: 12px;
+  border-radius: 5px;
   background-color: rgb(255, 255, 255);
   color: darkblue;
-  width: 400px;
-  height: 400px;
-
-
+  width: 300px;
+  height: 300px;
 }
 
+.ArticleTitle {
+  font-style: bold;
+  font-size: 25px;
+  line-height: 25px;
+  color: darkblue;
+  width: 280px; 
+}
 
+.ArticleContent {
+  font-size: 20px;
+  line-height: 21px;
+  color:darkblue;
+  margin-left: 10px;
+  width: 280px;
+  word-wrap: break-word;
+}
 
+ 
+.ArticleBy {
+  color: darkblue;
+  width: 280px;
+  position: relative;
+  bottom: -40px;
+  font-size: 12px;
+}
+ 
+.formHL {
+  color: rgb(69, 74, 95);
+  font-size: 12px;
+}
+ 
+ 
 .HeadlineContainer {
   z-index: +1;
   position: absolute;
@@ -117,6 +151,42 @@
   left: 15px;
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 5px;
-  background-color: rgb(250, 234, 143);
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
+  /* background-color: rgb(250, 234, 143); */
   color: darkblue;
+}
+
+
+
+.contentInput {
+  font-size: 20px;
+  line-height: 21px;
+  color:dark darkblue;
+  background-color: rgb(250, 243, 201);
+  width: auto;
+  height: auto;
+}
+
+
+
+.titleInput {
+  font-style: bold;
+  font-size: 25px;
+  color: darkblue;
+  background-color: rgb(250, 243, 201);
+  width: auto;
+  height: auto;
+}
+
+
+.authorInput {
+  font-size: 12px;
+  color: darkblue;
+  background-color: rgb(250, 243, 201);
+  width: auto;
+  height: auto;
+}
+
+.smallLineBreak {
+  line-height: 5px;
 }

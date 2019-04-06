@@ -7,30 +7,35 @@ export function AddArticleForm (props) {
       <React.Fragment>
       <form className='AddArticleContainer' onSubmit={props.handleSubmit}>
         <div>
-          <label htmlFor='title'>Title: </label>
+          <label className='formHL' htmlFor='title'>Title: </label><br/>
           <Field 
+            className='titleInput'
             name='title'
             component='input'
             type='text'
           />
         </div>
         <div>
-          <label htmlFor='content'>Content: </label>
+          <label className='formHL' htmlFor='content'>Content: </label><br/>
           <Field
+            className='contentInput'
             name='content'
-            component='input'
+            component='textarea'
+            rows="6"
+            cols="26"
             type='text'
           />
         </div>
-        <div>
-          <label htmlFor='author'>Author: </label>
+        <div >
+          <label className='formHL' htmlFor='author'>Author: </label><br/>
           <Field
+            className='authorInput'
             name='author'
             component='input'
             type='text'
           />
         </div>
-        <button type='submit'>SAVE</button>
+        <button className='button' type='submit'>SAVE</button>
       </form>
       </React.Fragment>
  
