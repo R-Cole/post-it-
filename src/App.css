@@ -47,9 +47,9 @@ body {
 }
 
 .ArticleCount {
-  position: relative;
-  top: -6px;
-  left: -132px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
   border-radius: 5px;
   background-color: rgb(255, 145, 2);
   color: white;
@@ -98,11 +98,35 @@ body {
   border-radius: 2px;
 }
 
+.submitFormButton{
+  border-radius: 5px;
+  font-size: 20px;
+  position: absolute;
+  bottom: -55px;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+  margin-left: -120px;
+}
+
+.deleteFormButton{
+  border-radius: 5px;
+  font-size: 20px;
+  position: absolute;
+  bottom: -55px;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+  margin-left: 30px;
+}
+
 .AddArticleContainer {
   z-index: +1;
   position: absolute;
-  top: 20px;
-  left: 300px;
+  /* top: 20px;
+  left: 300px; */
+  top: var(--addArticleTop);
+  left: var(--addArticleLeft);
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
@@ -112,6 +136,9 @@ body {
 }
 
 .ArticleTitle {
+  top: 31px;
+  position: absolute;
+  margin-left: -140px;
   font-style: bold;
   font-size: 25px;
   line-height: 25px;
@@ -122,6 +149,8 @@ body {
 .ArticleContent {
   font-size: 20px;
   line-height: 21px;
+  top: 48px;
+  position: absolute;
   color:darkblue;
   margin-left: 10px;
   width: 280px;
@@ -132,9 +161,10 @@ body {
 .ArticleBy {
   color: darkblue;
   width: 280px;
-  position: relative;
-  bottom: -40px;
+  position: absolute;
+  bottom: 5px;
   font-size: 12px;
+  margin-left: -140px;
 }
  
 .formHL {
@@ -161,7 +191,7 @@ body {
 .contentInput {
   font-size: 20px;
   line-height: 21px;
-  color:dark darkblue;
+  color: darkblue;
   background-color: rgb(250, 243, 201);
   width: auto;
   height: auto;
@@ -180,11 +210,13 @@ body {
 
 
 .authorInput {
-  font-size: 12px;
   color: darkblue;
   background-color: rgb(250, 243, 201);
-  width: auto;
-  height: auto;
+  width: 250px;
+  position: absolute;
+  bottom: 5px;
+  font-size: 12px;
+  margin-left: -125px;
 }
 
 .smallLineBreak {

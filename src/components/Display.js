@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import List from './List';
 import ToolBox from '../components/ToolBox';
 import AddArticleForm from '../components/AddArticleForm';
-import { addArticle } from '../actions/action';
+import { addArticle, editArticle } from '../actions/action';
+import HandCursor from '../assets/images/hand.png';
 
 const root = document.querySelector(':root');
 root.style.setProperty('--toolBoxTop', '95px');
 root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
+root.style.setProperty(`--addArticleLeft`,`${300}px`);
+root.style.setProperty(`--addArticleTop`,`${20}px`);
 
 // root.style.setProperty('--articleTop', '22px');
 // root.style.setProperty('--articleLeft', '22px');
 // root.style.setProperty('--zIndex', '-1');
  
-
 export class Display extends React.Component {
   
   constructor(props){
@@ -22,24 +24,42 @@ export class Display extends React.Component {
 
     this.state = {
       moveElement: null,
-      moveMode: 'ready',
+      mode: 'ready',
       showAddArticle: false,
       articleCount: 0,
-      moveEnabled: false
+      moveEnabled: false,
+      editAdd_X: null,
+      editAdd_Y: null
     }
 
     this.submitForm = this.submitForm.bind(this);
     this.newArticle = this.newArticle.bind(this);
+    this.editArticle = this.editArticle.bind(this);
     this.clickToEnable = this.clickToEnable.bind(this);
     this.moveEnabled = this.moveEnabled.bind(this);
+  }
+
+  editArticle = () => {
+
+    console.log('edit article select...');
+
+    this.setState({
+      mode: 'select' 
+    })
+ 
   }
    
   //Save the new article from values
   submitForm = (values) => {
-  
+    
+    //ADD a new article
+    if(this.state.mode === 'add'){
+      
+      let addCount = this.state.articleCount + 1;
+
       const newArticle = {
 
-        articleCount: this.state.articleCount + 1,
+        articleCount: addCount,
         title: values.title,
         content: values.content,
         author: values.author
@@ -47,42 +67,105 @@ export class Display extends React.Component {
       }
  
       this.props.dispatch(addArticle(newArticle));
-
-      let addCount = this.state.articleCount + 1;
-
+ 
        //for the article counter...
        this.setState({
-        moveMode: 'ready', 
+        mode: 'ready', 
         articleCount: addCount,
         showAddArticle: false,
         moveEnabled: false
       })
 
       //add randomness to start X and Y
-      let randXadd = Math.random() * (33 - 3) + 3; 
-      let neg = Math.random() * (2 - 1) + 1; 
-      if(neg === 2){randXadd = randXadd * -1};
+      // let randXadd = Math.random() * (33 - 3) + 3; 
+      // let neg = Math.random() * (2 - 1) + 1; 
+      // if(neg === 2){randXadd = randXadd * -1};
 
-      let randYadd = Math.random() * (33 - 3) + 3;
-      neg = Math.random() * (2 - 1) + 1; 
-      if(neg === 2){randYadd = randYadd * -1};
+      // let randYadd = Math.random() * (33 - 3) + 3;
+      // neg = Math.random() * (2 - 1) + 1; 
+      // if(neg === 2){randYadd = randYadd * -1};
 
+      //get the toolbox coords and adjust with offsets
+      let newArticle_X = parseInt(root.style.getPropertyValue(`--toolBoxLeft`)) + 135;
+      let newArticle_Y = parseInt(root.style.getPropertyValue(`--toolBoxTop`)) - 35;
 
-      //set start place for new article
-      root.style.setProperty(`--articleLeft${this.state.articleCount}`,`${300 + randXadd}px`);
-      root.style.setProperty(`--articleTop${this.state.articleCount}`,`${18 + randYadd}px`);
+      //set start place for new article based on the efault toolbox coords
+      root.style.setProperty(`--articleLeft${this.state.articleCount}`,`${newArticle_X}px`);
+      root.style.setProperty(`--articleTop${this.state.articleCount}`,`${newArticle_Y}px`);
       root.style.setProperty('--cursorHand','auto'); 
  
+    }
+
+    //EDIT an existing article
+    if(this.state.mode === 'edit'){
+      
+      let handle = this.state.moveElement
+
+      const editedArticle = {
+
+        articleCount: handle + 1,
+        title: values.title,
+        content: values.content,
+        author: values.author
+ 
+      }
+ 
+      //Edit article action
+      this.props.dispatch(editArticle(editedArticle,handle));
+  
+      //for the article counter...
+      this.setState({
+        mode: 'ready', 
+        showAddArticle: false,
+        moveEnabled: false
+      })
+
+      //add randomness to start X and Y
+      // let randXadd = Math.random() * (33 - 3) + 3; 
+      // let neg = Math.random() * (2 - 1) + 1; 
+      // if(neg === 2){randXadd = randXadd * -1};
+
+      // let randYadd = Math.random() * (33 - 3) + 3;
+      // neg = Math.random() * (2 - 1) + 1; 
+      // if(neg === 2){randYadd = randYadd * -1};
+ 
+      //use existing x y coords
+      //root.style.setProperty(`--articleLeft${this.state.articleCount}`,`${300 + randXadd}px`);
+      //root.style.setProperty(`--articleTop${this.state.articleCount}`,`${18 + randYadd}px`);
+      root.style.setProperty('--cursorHand','auto'); 
+ 
+    }//end edit
+
+  }
+
+  deleteForm = () => {
+
+    //for the article counter...
+    this.setState({
+      mode: 'ready', 
+      showAddArticle: false,
+      moveEnabled: false
+    })
+
+
   }
 
   //Open the add article form
   newArticle = () => {
 
     root.style.setProperty('--cursorHand','auto'); 
+
+    //get the toolbox coords and adjust with offset
+    let toolBox_X = parseInt(root.style.getPropertyValue(`--toolBoxLeft`)) + 135;
+    let toolBox_Y = parseInt(root.style.getPropertyValue(`--toolBoxTop`)) - 35;
+  
+    //put add article form in default location near toolbox
+    root.style.setProperty(`--addArticleLeft`, `${toolBox_X}px`);
+    root.style.setProperty(`--addArticleTop`, `${toolBox_Y}px`);
   
     //for the article counter...
     this.setState({
-     moveMode: 'add',
+     mode: 'add',
      showAddArticle: true,
      moveEnabled: false
     })
@@ -95,23 +178,21 @@ export class Display extends React.Component {
     //activate movement
 
     //OFF
-    if(this.state.moveEnabled && this.state.moveMode !== 'add'){
+    if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
 
       root.style.setProperty('--cursorHand','auto'); 
-
       root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
  
       this.setState({
         moveElement: null,
-        moveEnabled: false
+        moveEnabled: false,
+         
   
       })
     }
     //ON
-    else if(!this.state.moveEnabled && this.state.moveMode !== 'add'){
-
-      
-       
+    if(!this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
+   
       this.setState({
         moveElement: handle,
         moveEnabled: true
@@ -121,28 +202,26 @@ export class Display extends React.Component {
     }
 
     //select post to edit
-    if(!this.state.moveEnabled && this.state.moveMode !== 'editSelect'){
- 
-      //select?
+    if(this.state.mode === 'select'){
 
-      //the handle is the index for the 'article'
-
-      //reload article into a form?
-      //or
-      //edit article on article?
-
-      // this.setState({
-      //   moveElement: handle,
-      //   moveEnabled: true
+      console.log('handle: ',handle);
+      
+      this.setState({
+        mode: 'edit',
+        moveElement: handle,
+        moveEnabled: false,
+        showAddArticle: true
   
-      // })
-
-    }
-
-     
-  }
+      })
  
-
+      //put add article form on top of current selection 
+      root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
+      root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
+ 
+    }//end select
+  
+  }
+  
   //moves whatever element is active
   moveEnabled(e){
  
@@ -150,7 +229,7 @@ export class Display extends React.Component {
 
     //console.log('this.state.moveElement ',this.state.moveElement );
 
-    if(this.state.moveMode === 'ready' && this.state.moveEnabled){
+    if(this.state.mode === 'ready' && this.state.moveEnabled){
  
       // console.log('moving!');
       // console.log('X ',e.pageX);
@@ -162,7 +241,8 @@ export class Display extends React.Component {
       //move post-its
       if(this.state.moveElement !== 'toolBox'){
 
-        root.style.setProperty('--cursorHand','url(http://www.javascriptkit.com/dhtmltutors/cursor-hand.gif),auto'); 
+        //set custom hand cursor
+        root.style.setProperty('--cursorHand',`url(${HandCursor}),auto`); 
 
         let Yadd = 30;//(parseInt(this.state.moveElement) + 1) * 250;
          
@@ -183,6 +263,9 @@ export class Display extends React.Component {
       //move toolbox
       if(this.state.moveElement === 'toolBox'){
 
+        //set custom hand cursor
+        root.style.setProperty('--cursorHand',`url(${HandCursor}),auto`);
+
         let Xclient = e.clientX;
         let Yclient = e.clientY;
 
@@ -197,62 +280,77 @@ export class Display extends React.Component {
         root.style.setProperty('--toolBoxTop',`${Yclient - 20}px`);
         
       }
-
-      
  
     }
-
-
+ 
   }
 
   render(){
+
+    let theArticle;
  
-    // const doThis = function(arg){
+    if(this.state.mode === 'edit'){
+ 
+      let handle = this.state.moveElement;
+      theArticle  = this.props.articles[handle];
+ 
+    }
+    else {
 
-    //   this.arg = arg;
-  
-    //   this.functionOne = () =>{console.log('hello from doThis 1: ', this.arg);};
-  
-    //   this.functionTwo = () =>{console.log('hello from doThis 2: ', this.arg);};
-  
-    // }
-
-    // const done = new doThis('wow');
-
-    // done.functionOne();
-    // done.functionTwo();
+      theArticle  = {
+        articleCount: this.state.articleCount,
+        title: null,
+        content: null,
+        author: null
+      }
+ 
+    }
  
     return(
        
       <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)}>
-        <List selectedArticle={this.state.moveElement} clickToEnable={this.clickToEnable} moveEnabled={this.moveEnabled}/>
-        {this.state.showAddArticle && <AddArticleForm onSubmit={this.submitForm}/>}
+        <List 
+          selectedArticle={this.state.moveElement} 
+          clickToEnable={this.clickToEnable} 
+          moveEnabled={this.moveEnabled}
+        />
+        {this.state.showAddArticle && 
+          <AddArticleForm 
+            onSubmit={this.submitForm}
+            deleteForm={this.deleteForm}
+            articleCount={this.state.moveElement}
+            mode={this.state.mode}
+            handle={this.state.moveElement}
+            articles={this.props.articles}
+            initialValues={theArticle}
+        />}
         
-        <ToolBox newArticle={this.newArticle} clickToEnable={this.clickToEnable}/>
+        <ToolBox 
+          newArticle={this.newArticle}
+          editArticle={this.editArticle} 
+          clickToEnable={this.clickToEnable}/>
         <h4 className='HeadlineContainer' >POST IT! </h4>
         <p>article count: {this.state.articleCount}</p>
         <p>handle: {this.state.moveElement}</p>
-        
+        <p>mode: {this.state.mode}</p>
+        <p>moveEnabled: {(this.state.moveEnabled)? 'true': 'false'}</p>
+ 
       </div>
  
     )
-
-
-  }
-
-  
-   
-}
  
-
+  }
+ 
+}
+  
 const mapStateToProps = (state) => {
 
   return {
 
-    useArticles: state.articles
+    articles: state.randyReducer.articles
 
   };
 
 };
 
-export default connect (mapStateToProps)(Display);
+export default connect(mapStateToProps)(Display);

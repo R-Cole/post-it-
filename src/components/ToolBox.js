@@ -10,7 +10,7 @@ function ToolBox(props) {
        <p className='toolBoxText'>TOOLBOX</p>
        <br/>
        <button className='button' onClick={(e)=> props.newArticle()}>NEW POST</button>
-       <button className='button' onClick={(e)=> props.newArticle()}>EDIT POST</button>
+       <button className='button' onClick={(e)=> props.editArticle()}>EDIT POST</button>
       </div>
   
   

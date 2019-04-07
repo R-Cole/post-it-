@@ -1,5 +1,5 @@
 //import action
-import { ADD_ARTICLE } from '../actions/action';
+import { ADD_ARTICLE, EDIT_ARTICLE } from '../actions/action';
 
 //set initial state
 const initialState = {
@@ -23,6 +23,31 @@ function randyReducer(state = initialState, action) {
  
   }
  
+  //REPLACE article with edited article
+  if(action.type === EDIT_ARTICLE){
+
+    const newArticles = state.articles.map((item,index)=>{
+
+      if(index === action.handle){
+
+        return action.payload
+
+      }
+
+      else return item;
+    
+    });
+
+    console.log('newArticles ',newArticles);
+ 
+    return Object.assign({}, state, {
+
+      articles: newArticles
+ 
+    });
+
+
+  }
   
   //if no action command is matched then just return the existing state
   else return state;

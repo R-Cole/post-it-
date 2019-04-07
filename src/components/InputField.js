@@ -6,7 +6,7 @@ const InputField = ({
       label,
       type,
       placeholder,
-      onChange
+      onChange  
    
     }) => (
        

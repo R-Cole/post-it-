@@ -5,7 +5,6 @@ import store from '../src/store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import consoleTest from '../src/consoleTest';
 
 //Provider passes down the global store to all components inside the App component
 

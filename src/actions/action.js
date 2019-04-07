@@ -14,3 +14,18 @@ export function addArticle(payload){
   }
 
 }
+
+
+export const EDIT_ARTICLE = 'EDIT_ARTICLE';
+
+export function editArticle(payload,handle){
+
+  return {
+
+    type: 'EDIT_ARTICLE',
+    payload: payload,
+    handle: handle
+ 
+  }
+ 
+}
