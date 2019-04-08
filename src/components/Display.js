@@ -346,7 +346,7 @@ export class Display extends React.Component {
  
     return(
        
-      <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)}>
+      <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)} onTouchMove={(e)=>this.moveEnabled(e)}>
         <List 
           selectedArticle={this.state.moveElement} 
           clickToEnable={this.clickToEnable} 
