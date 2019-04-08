@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import List from './List';
 import ToolBox from '../components/ToolBox';
 import AddArticleForm from '../components/AddArticleForm';
-import { addArticle, editArticle } from '../actions/action';
+import { addArticle, editArticle, deleteArticle } from '../actions/action';
 import HandCursor from '../assets/images/hand.png';
 
 const root = document.querySelector(':root');
@@ -26,7 +26,6 @@ export class Display extends React.Component {
       moveElement: null,
       mode: 'ready',
       showAddArticle: false,
-      articleCount: 0,
       moveEnabled: false,
       editAdd_X: null,
       editAdd_Y: null
@@ -38,14 +37,24 @@ export class Display extends React.Component {
     this.clickToEnable = this.clickToEnable.bind(this);
     this.moveEnabled = this.moveEnabled.bind(this);
   }
-
+ 
   editArticle = () => {
+    
+    if(this.state.mode === 'ready' && this.props.articles.length > 0){
+    
+      this.setState({
+        mode: 'select' 
+      })
 
-    console.log('edit article select...');
+    }
+    else {
 
-    this.setState({
-      mode: 'select' 
-    })
+      this.setState({
+        moveEnabled: false,
+        moveElement: null,
+      })
+
+    }
  
   }
    
@@ -54,12 +63,18 @@ export class Display extends React.Component {
     
     //ADD a new article
     if(this.state.mode === 'add'){
-      
-      let addCount = this.state.articleCount + 1;
 
+      let id = 1;
+
+      if(this.props.articles.length > 0){
+
+        id = this.props.articles[this.props.articles.length - 1].articleId + 1;
+
+      }
+       
       const newArticle = {
 
-        articleCount: addCount,
+        articleId: id,
         title: values.title,
         content: values.content,
         author: values.author
@@ -71,7 +86,6 @@ export class Display extends React.Component {
        //for the article counter...
        this.setState({
         mode: 'ready', 
-        articleCount: addCount,
         showAddArticle: false,
         moveEnabled: false
       })
@@ -89,9 +103,9 @@ export class Display extends React.Component {
       let newArticle_X = parseInt(root.style.getPropertyValue(`--toolBoxLeft`)) + 135;
       let newArticle_Y = parseInt(root.style.getPropertyValue(`--toolBoxTop`)) - 35;
 
-      //set start place for new article based on the efault toolbox coords
-      root.style.setProperty(`--articleLeft${this.state.articleCount}`,`${newArticle_X}px`);
-      root.style.setProperty(`--articleTop${this.state.articleCount}`,`${newArticle_Y}px`);
+      //set start place for new article based on the default toolbox coords
+      root.style.setProperty(`--articleLeft${id}`,`${newArticle_X}px`);
+      root.style.setProperty(`--articleTop${id}`,`${newArticle_Y}px`);
       root.style.setProperty('--cursorHand','auto'); 
  
     }
@@ -103,7 +117,7 @@ export class Display extends React.Component {
 
       const editedArticle = {
 
-        articleCount: handle + 1,
+        articleId: handle,
         title: values.title,
         content: values.content,
         author: values.author
@@ -139,6 +153,13 @@ export class Display extends React.Component {
   }
 
   deleteForm = () => {
+ 
+    //dispatch delete action if note exists 
+    if(this.state.mode === 'edit'){
+
+      this.props.dispatch(deleteArticle(this.state.moveElement));
+ 
+    }
 
     //for the article counter...
     this.setState({
@@ -146,30 +167,33 @@ export class Display extends React.Component {
       showAddArticle: false,
       moveEnabled: false
     })
-
-
+ 
   }
 
   //Open the add article form
   newArticle = () => {
 
-    root.style.setProperty('--cursorHand','auto'); 
+    if(this.state.mode === 'ready'){
 
-    //get the toolbox coords and adjust with offset
-    let toolBox_X = parseInt(root.style.getPropertyValue(`--toolBoxLeft`)) + 135;
-    let toolBox_Y = parseInt(root.style.getPropertyValue(`--toolBoxTop`)) - 35;
-  
-    //put add article form in default location near toolbox
-    root.style.setProperty(`--addArticleLeft`, `${toolBox_X}px`);
-    root.style.setProperty(`--addArticleTop`, `${toolBox_Y}px`);
-  
-    //for the article counter...
-    this.setState({
-     mode: 'add',
-     showAddArticle: true,
-     moveEnabled: false
-    })
+      root.style.setProperty('--cursorHand','auto'); 
 
+      //get the toolbox coords and adjust with offset
+      let toolBox_X = parseInt(root.style.getPropertyValue(`--toolBoxLeft`)) + 135;
+      let toolBox_Y = parseInt(root.style.getPropertyValue(`--toolBoxTop`)) - 35;
+  
+      //put add article form in default location near toolbox
+      root.style.setProperty(`--addArticleLeft`, `${toolBox_X}px`);
+      root.style.setProperty(`--addArticleTop`, `${toolBox_Y}px`);
+  
+      //for the article counter...
+      this.setState({
+        mode: 'add',
+        showAddArticle: true,
+        moveEnabled: false
+      })
+ 
+    }
+ 
   }
 
   //enable movement or select article in EDIT mode
@@ -186,8 +210,6 @@ export class Display extends React.Component {
       this.setState({
         moveElement: null,
         moveEnabled: false,
-         
-  
       })
     }
     //ON
@@ -196,7 +218,6 @@ export class Display extends React.Component {
       this.setState({
         moveElement: handle,
         moveEnabled: true
-  
       })
 
     }
@@ -204,14 +225,13 @@ export class Display extends React.Component {
     //select post to edit
     if(this.state.mode === 'select'){
 
-      console.log('handle: ',handle);
+      console.log('select handle: ',handle);
       
       this.setState({
         mode: 'edit',
         moveElement: handle,
         moveEnabled: false,
         showAddArticle: true
-  
       })
  
       //put add article form on top of current selection 
@@ -290,20 +310,25 @@ export class Display extends React.Component {
     let theArticle;
  
     if(this.state.mode === 'edit'){
- 
-      let handle = this.state.moveElement;
-      theArticle  = this.props.articles[handle];
- 
-    }
-    else {
 
+      //find article matching the articleId
+      let handle = this.state.moveElement;
+      theArticle = this.props.articles.find((item) => {
+        
+        if(item.articleId === handle){return { item }} 
+
+      })
+
+      console.log('theArticle >>',theArticle);
+
+    } 
+    else {
       theArticle  = {
-        articleCount: this.state.articleCount,
+        articleId: null,
         title: null,
         content: null,
         author: null
       }
- 
     }
  
     return(
@@ -318,7 +343,7 @@ export class Display extends React.Component {
           <AddArticleForm 
             onSubmit={this.submitForm}
             deleteForm={this.deleteForm}
-            articleCount={this.state.moveElement}
+            articleCount={this.props.articles.length}
             mode={this.state.mode}
             handle={this.state.moveElement}
             articles={this.props.articles}
@@ -329,11 +354,14 @@ export class Display extends React.Component {
           newArticle={this.newArticle}
           editArticle={this.editArticle} 
           clickToEnable={this.clickToEnable}/>
-        <h4 className='HeadlineContainer' >POST IT! </h4>
-        <p>article count: {this.state.articleCount}</p>
+        <div className='HeadlineContainer'>POST IT!</div>
+        <div className = 'InstructHover'>
+          <span className = 'InstructText'>Click to position a post or the toolbox<br/>Click again to stop</span>
+        </div>
+        {/* <p>local article count: {this.props.articles.length}</p>
         <p>handle: {this.state.moveElement}</p>
         <p>mode: {this.state.mode}</p>
-        <p>moveEnabled: {(this.state.moveEnabled)? 'true': 'false'}</p>
+        <p>moveEnabled: {(this.state.moveEnabled)? 'true': 'false'}</p> */}
  
       </div>
  

@@ -1,5 +1,5 @@
 //import action
-import { ADD_ARTICLE, EDIT_ARTICLE } from '../actions/action';
+import { ADD_ARTICLE, EDIT_ARTICLE, DELETE_ARTICLE } from '../actions/action';
 
 //set initial state
 const initialState = {
@@ -11,13 +11,15 @@ const initialState = {
 //reducer function
 function randyReducer(state = initialState, action) {
 
+  const newArticles = state.articles.concat(action.payload);
+
   //Add article to articles array
   if(action.type === ADD_ARTICLE){
  
     //Object assign creates a new object to avoid object mutation
     return Object.assign({}, state, {
 
-      articles: state.articles.concat(action.payload) //concat adds payload data to the existing state
+      articles: newArticles //concat adds payload data to the existing state
  
     });
  
@@ -26,9 +28,9 @@ function randyReducer(state = initialState, action) {
   //REPLACE article with edited article
   if(action.type === EDIT_ARTICLE){
 
-    const newArticles = state.articles.map((item,index)=>{
+    const newArticles = state.articles.map((item) => {
 
-      if(index === action.handle){
+      if(item.articleId === action.handle){
 
         return action.payload
 
@@ -48,6 +50,26 @@ function randyReducer(state = initialState, action) {
 
 
   }
+
+  //DELETE article by handle
+  if(action.type === DELETE_ARTICLE){
+
+    console.log('index? ',action.handle);
+
+    const newArticles = state.articles.filter(item => item.articleId !== action.handle);
+ 
+    console.log('old Articles ',state.articles);
+    console.log('new Articles ',newArticles);
+
+    return Object.assign({}, state, {
+
+      articles: newArticles
+
+    })
+
+
+  }  
+
   
   //if no action command is matched then just return the existing state
   else return state;

@@ -16,32 +16,31 @@ export class List extends React.Component {
     render() {
  
       const theArticleList = this.props.articles.length === 0
-      ? 'No Articles Yet...'
+      ? 'No Posts Yet...'
       : this.props.articles.map((item,index) => {
 
-        let handle = index;
-        posStyle[index] = {
+        let handle = item.articleId;
+
+        posStyle[handle] = {
           position: 'absolute',
-          top: `var(--articleTop${index})`,
-          left: `var(--articleLeft${index})`,
-          zIndex: `var(--articleZindex${index})`
+          top: `var(--articleTop${handle})`,
+          left: `var(--articleLeft${handle})`,
+          zIndex: `var(--articleZindex${handle})`
         }
    
         return (
         
         <li 
-          style={posStyle[index]}
-          key= {index} 
+          style={posStyle[handle]}
+          key= {handle} 
           className='Article' 
           onClick={(e)=>this.props.clickToEnable(e,handle)}>
-          <span className='ArticleCount'>
-            #{item.articleCount}
+          <span className='ArticleId'>
+            #{item.articleId}
           </span>
            <div>
             <span className='ArticleTitle'>{item.title}</span>
-            <br className='smallLineBreak'></br>
             <p className='ArticleContent'>{item.content}</p>
-            <br className='smallLineBreak'></br>  
             <span className='ArticleBy'>posted by {item.author}</span>
           </div>
         </li>

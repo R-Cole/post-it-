@@ -46,7 +46,7 @@ body {
   list-style: none;
 }
 
-.ArticleCount {
+.ArticleId {
   position: absolute;
   top: 3px;
   left: 3px;
@@ -74,7 +74,7 @@ body {
   display: block;
   width: 100px;
   height: 170px;
-  background-color: rgb(116, 118, 129);
+  background-color: #576379;
 }
 
 .toolBoxText {
@@ -92,13 +92,33 @@ body {
 
 }
 
-.button {
+.newPostbutton {
+  color: rgb(24, 20, 58);
+  position: absolute;
+  top: 40px;
+  left: 16px;
   border: none;
   padding: 5px;
   border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+
+.editPostbutton {
+  color: rgb(24, 20, 58);
+  position: absolute;
+  top: 70px;
+  left: 16px;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
 
 .submitFormButton{
+  color: rgb(24, 20, 58);
   border-radius: 5px;
   font-size: 20px;
   position: absolute;
@@ -107,9 +127,12 @@ body {
   padding: 10px;
   border-radius: 2px;
   margin-left: -120px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
 
 .deleteFormButton{
+  color: rgb(226, 0, 0);
   border-radius: 5px;
   font-size: 20px;
   position: absolute;
@@ -118,6 +141,8 @@ body {
   padding: 10px;
   border-radius: 2px;
   margin-left: 30px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
 
 .AddArticleContainer {
@@ -176,14 +201,51 @@ body {
 .HeadlineContainer {
   z-index: +1;
   position: absolute;
-  padding: 15px;
-  top: -15px;
+  top: 15px;
   left: 15px;
+  width: 100px;
+  height: 55px;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle;
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 5px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
   /* background-color: rgb(250, 234, 143); */
   color: darkblue;
+}
+
+
+.InstructHover {
+  z-index: +1;
+  visibility: visible; 
+  color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 80px;
+  width: 150px;
+}
+ 
+.InstructHover:hover .InstructText{
+  font-size: 15px;
+  visibility: visible; 
+  border-radius: 5px;
+  color: rgb(3, 8, 82);
+  background-color: rgb(255, 248, 217);
+  position: absolute;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  top: 10px;
+  left: 120px;
+  height: 70px;
+  width: 150px; 
+}
+
+.InstructText {
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  width: 300px;
 }
 
 
@@ -196,9 +258,7 @@ body {
   width: auto;
   height: auto;
 }
-
-
-
+ 
 .titleInput {
   font-style: bold;
   font-size: 25px;

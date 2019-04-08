@@ -1,11 +1,9 @@
 
-//define action type variable -- a safegaurd
+//ADD article
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 
-//define action function
 export function addArticle(payload){
-
-  //send command (type) to reducer along with data(payload)
+ 
   return {
 
     type:'ADD_ARTICLE',
@@ -15,7 +13,7 @@ export function addArticle(payload){
 
 }
 
-
+//EDIT article
 export const EDIT_ARTICLE = 'EDIT_ARTICLE';
 
 export function editArticle(payload,handle){
@@ -28,4 +26,18 @@ export function editArticle(payload,handle){
  
   }
  
+}
+
+//DELETE article
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+
+export function deleteArticle(handle){
+
+  return {
+
+    type: DELETE_ARTICLE,
+    handle: handle
+  }
+
+
 }
