@@ -34,6 +34,7 @@ export class Display extends React.Component {
     this.moveEnabled = this.moveEnabled.bind(this);
   }
  
+  //edit selected note
   editArticle = () => {
     
     if(this.state.mode === 'ready' && this.props.articles.length > 0){
