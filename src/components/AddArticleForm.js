@@ -8,9 +8,6 @@ export class AddArticleForm extends React.Component{
     return (
       <React.Fragment>
       <form className='AddArticleContainer' onSubmit={this.props.handleSubmit} >
-          {/* <span className='ArticleCount'>
-            #{this.props.articleCount}
-          </span> */}
         <div>
           <label className='formHL' htmlFor='title'></label><br/>
           <Field 

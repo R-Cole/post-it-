@@ -80,7 +80,8 @@ body {
 .toolBoxText {
   text-align: center;
   font-size: 15px;
-  color: rgb(198, 233, 0);
+  /* color: rgb(198, 233, 0); */
+  color: rgb(255, 166, 0);
    
 }
 
@@ -115,6 +116,22 @@ body {
   border-radius: 2px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
   filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+
+.helpButton {
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  top: 28px;
+  left: 70px;
+  width: 21px;
+  border: none;
+  padding: 2px;
+  border-radius: 7px;
+  background-color: orange;
+  filter: drop-shadow(0 0 0.12rem rgb(110, 50, 1));
 }
 
 .submitFormButton{
@@ -214,22 +231,11 @@ body {
   /* background-color: rgb(250, 234, 143); */
   color: darkblue;
 }
-
-
-.InstructHover {
-  z-index: +1;
-  visibility: visible; 
-  color: black;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 40px;
-  width: 150px;
-}
  
-.InstructHover:hover .InstructText{
+ 
+.HelpContainer{
+  z-index: +1;
   font-size: 15px;
-  visibility: visible; 
   border-radius: 5px;
   color: rgb(3, 8, 82);
   background-color: rgb(255, 248, 217);
@@ -241,13 +247,12 @@ body {
   width: 150px; 
 }
 
-.InstructText {
-  visibility: hidden;
+.HelpText {
   background-color: white;
   color: black;
   width: 300px;
 }
-
+ 
 
 
 .contentInput {

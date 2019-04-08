@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import List from './List';
 import ToolBox from '../components/ToolBox';
+import Help from '../components/Help';
 import AddArticleForm from '../components/AddArticleForm';
 import { addArticle, editArticle, deleteArticle } from '../actions/action';
 import HandCursor from '../assets/images/hand.png';
@@ -24,7 +25,8 @@ export class Display extends React.Component {
       showAddArticle: false,
       moveEnabled: false,
       editAdd_X: null,
-      editAdd_Y: null
+      editAdd_Y: null,
+      showHelp: true
     }
 
     this.submitForm = this.submitForm.bind(this);
@@ -32,6 +34,7 @@ export class Display extends React.Component {
     this.editArticle = this.editArticle.bind(this);
     this.clickToEnable = this.clickToEnable.bind(this);
     this.moveEnabled = this.moveEnabled.bind(this);
+    this.showHelp = this.showHelp.bind(this);
   }
  
   //edit selected note
@@ -40,7 +43,7 @@ export class Display extends React.Component {
     if(this.state.mode === 'ready' && this.props.articles.length > 0){
     
       this.setState({
-        mode: 'select' 
+        mode: 'select', 
       })
 
     }
@@ -186,7 +189,8 @@ export class Display extends React.Component {
       this.setState({
         mode: 'add',
         showAddArticle: true,
-        moveEnabled: false
+        moveEnabled: false,
+        showHelp: false
       })
  
     }
@@ -207,6 +211,7 @@ export class Display extends React.Component {
       this.setState({
         moveElement: null,
         moveEnabled: false,
+        showHelp: false
       })
     }
     //ON
@@ -214,7 +219,8 @@ export class Display extends React.Component {
    
       this.setState({
         moveElement: handle,
-        moveEnabled: true
+        moveEnabled: true,
+        showHelp: false
       })
 
     }
@@ -226,7 +232,8 @@ export class Display extends React.Component {
         mode: 'edit',
         moveElement: handle,
         moveEnabled: false,
-        showAddArticle: true
+        showAddArticle: true,
+        showHelp: false
       })
  
       //put add article form on top of current selection 
@@ -239,20 +246,9 @@ export class Display extends React.Component {
   
   //moves whatever element is active
   moveEnabled(e){
- 
-    //console.log('clientY: ',e.clientY,'pageY: ',e.pageY,);
-
-    //console.log('this.state.moveElement ',this.state.moveElement );
-
+  
     if(this.state.mode === 'ready' && this.state.moveEnabled){
- 
-      // console.log('moving!');
-      // console.log('X ',e.pageX);
-      // console.log('Y ',e.pageY);
- 
-      // root.style.setProperty('--main-color', randomHSL());
-
-
+  
       //move post-its
       if(this.state.moveElement !== 'toolBox'){
 
@@ -300,10 +296,35 @@ export class Display extends React.Component {
  
   }
 
+  showHelp(){
+
+    if(!this.state.showHelp){
+ 
+      this.setState({
+
+        showHelp: true
+
+      })
+    }
+    else{
+      this.setState({
+
+        showHelp: false
+
+      })
+ 
+    }
+
+
+
+  }
+
   render(){
 
+    //Var holder for the initial values...
     let theArticle;
- 
+    
+    //Populate form with exitsing information for EDIT mode or null for new...
     if(this.state.mode === 'edit'){
 
       //find article matching the articleId
@@ -319,6 +340,9 @@ export class Display extends React.Component {
         author: null
       }
     }
+
+    //Show help screen...
+
  
     return(
        
@@ -328,6 +352,7 @@ export class Display extends React.Component {
           clickToEnable={this.clickToEnable} 
           moveEnabled={this.moveEnabled}
         />
+
         {this.state.showAddArticle && 
           <AddArticleForm 
             onSubmit={this.submitForm}
@@ -342,15 +367,14 @@ export class Display extends React.Component {
         <ToolBox 
           newArticle={this.newArticle}
           editArticle={this.editArticle} 
-          clickToEnable={this.clickToEnable}/>
-        <div className='HeadlineContainer'>POST IT!</div>
-        <div className = 'InstructHover'>
-          <span className = 'InstructText'>Click to position a post or the toolbox<br/>Click again to stop</span>
+          clickToEnable={this.clickToEnable}
+          showHelp={this.showHelp}
+        />
+    
+        <div className='HeadlineContainer'>POST IT!
+        <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
         </div>
-        {/* <p>local article count: {this.props.articles.length}</p>
-        <p>handle: {this.state.moveElement}</p>
-        <p>mode: {this.state.mode}</p>
-        <p>moveEnabled: {(this.state.moveEnabled)? 'true': 'false'}</p> */}
+        {this.state.showHelp && <Help/>} 
  
       </div>
  
