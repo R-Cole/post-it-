@@ -12,10 +12,6 @@ root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
-
-// root.style.setProperty('--articleTop', '22px');
-// root.style.setProperty('--articleLeft', '22px');
-// root.style.setProperty('--zIndex', '-1');
  
 export class Display extends React.Component {
   
