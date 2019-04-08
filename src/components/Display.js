@@ -246,9 +246,11 @@ export class Display extends React.Component {
   
   //moves whatever element is active
   moveEnabled(e){
-  
+
+    e.preventDefault();
+ 
     if(this.state.mode === 'ready' && this.state.moveEnabled){
-  
+ 
       //move post-its
       if(this.state.moveElement !== 'toolBox'){
 
@@ -260,9 +262,22 @@ export class Display extends React.Component {
         let Xclient = e.clientX;
         let Yclient = e.clientY;
 
+        if(e.type === 'touchmove'){
+ 
+          Xclient = e.touches[0].clientX;
+          Yclient = e.touches[0].clientY;
+           
+        }
+
         if(e.pageY > Yclient){
 
           Yclient = e.pageY;
+
+          if(e.type === 'touchmove'){
+
+            Yclient = e.touches[0].pageY;
+
+          }
 
         }
  
