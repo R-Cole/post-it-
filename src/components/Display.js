@@ -224,9 +224,7 @@ export class Display extends React.Component {
 
     //select post to edit
     if(this.state.mode === 'select'){
-
-      console.log('select handle: ',handle);
-      
+  
       this.setState({
         mode: 'edit',
         moveElement: handle,
@@ -313,14 +311,8 @@ export class Display extends React.Component {
 
       //find article matching the articleId
       let handle = this.state.moveElement;
-      theArticle = this.props.articles.find((item) => {
-        
-        if(item.articleId === handle){return { item }} 
-
-      })
-
-      console.log('theArticle >>',theArticle);
-
+      theArticle = this.props.articles.find((item) => item.articleId === handle);
+ 
     } 
     else {
       theArticle  = {

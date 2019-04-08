@@ -39,9 +39,7 @@ function randyReducer(state = initialState, action) {
       else return item;
     
     });
-
-    console.log('newArticles ',newArticles);
- 
+  
     return Object.assign({}, state, {
 
       articles: newArticles
@@ -53,14 +51,9 @@ function randyReducer(state = initialState, action) {
 
   //DELETE article by handle
   if(action.type === DELETE_ARTICLE){
-
-    console.log('index? ',action.handle);
-
+  
     const newArticles = state.articles.filter(item => item.articleId !== action.handle);
- 
-    console.log('old Articles ',state.articles);
-    console.log('new Articles ',newArticles);
-
+  
     return Object.assign({}, state, {
 
       articles: newArticles
