@@ -5,7 +5,11 @@ export default function Help(props){
   return(
 
     <div className = 'HelpContainer'>
-      <span className = 'HelpText'>Click to position a post or the toolbox<br/>Click again to stop</span>
+      <div className = 'HelpText'>
+      Click on a Post or the Toolbox to move it<br/>
+      Click it again to stop<br/>
+      To EDIT a note: click EDIT then select note by clicking on it<br/>
+      Have Fun!</div>
     </div>
  
   )

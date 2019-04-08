@@ -287,8 +287,8 @@ export class Display extends React.Component {
         }
 
         //toolbox
-        root.style.setProperty('--toolBoxLeft',`${Xclient - 10}px`);
-        root.style.setProperty('--toolBoxTop',`${Yclient - 20}px`);
+        root.style.setProperty('--toolBoxLeft',`${Xclient - 14}px`);
+        root.style.setProperty('--toolBoxTop',`${Yclient - 100}px`);
         
       }
  
