@@ -87,11 +87,9 @@ body {
 }
 
 .displayContainer {
-  
   cursor: var(--cursorHand);
   width: stretch;
   height: stretch;
-
 }
 
 .newPostbutton {
@@ -118,7 +116,6 @@ body {
   background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
   filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
-
 
 .helpButton {
   font-size: 15px;
@@ -215,7 +212,6 @@ body {
   font-size: 12px;
 }
  
- 
 .HeadlineContainer {
   z-index: +1;
   position: absolute;
@@ -257,9 +253,7 @@ body {
   color:darkblue;
   word-wrap: break-word;
 }
- 
-
-
+  
 .contentInput {
   font-size: 20px;
   line-height: 21px;
@@ -277,7 +271,6 @@ body {
   width: auto;
   height: auto;
 }
-
 
 .authorInput {
   color: darkblue;
