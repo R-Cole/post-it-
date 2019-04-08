@@ -229,11 +229,9 @@ body {
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 5px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
-  /* background-color: rgb(250, 234, 143); */
   color: darkblue;
 }
- 
- 
+  
 .HelpContainer {
   z-index: +1;
   border-radius: 5px;
