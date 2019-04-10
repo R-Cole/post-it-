@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 import List from './List';
 import ToolBox from '../components/ToolBox';
 import Help from '../components/Help';
@@ -274,45 +275,56 @@ export class Display extends React.Component {
     //e.preventDefault();
  
     if(this.state.mode === 'ready' && this.state.moveEnabled){
- 
+      
+      let Xadd;
+      let Yadd;//(parseInt(this.state.moveElement) + 1) * 250;  
+      let Xclient;
+      let Yclient;
+
       //move post-its
       if(this.state.moveElement !== 'toolBox'){
 
-        //set custom hand cursor
-        root.style.setProperty('--cursorHand',`url(${HandCursor}),auto`); 
+        //Desktop
+        if(!isMobile){
 
-        let Yadd = 30;//(parseInt(this.state.moveElement) + 1) * 250;
-         
-        let Xclient = e.clientX;
-        let Yclient = e.clientY;
+          Xadd = 80;
 
-        if(e.type === 'touchmove'){
+          //set custom hand cursor
+          root.style.setProperty('--cursorHand',`url(${HandCursor}),auto`); 
 
-          console.log('touch move ',e.type);
-           
-          Xclient = e.touches[0].clientX;
-          Yclient = e.touches[0].clientY;
-           
-        }
+          Yadd = 30;//(parseInt(this.state.moveElement) + 1) * 250;
+          Xclient = e.clientX;
+          Yclient = e.clientY;
+ 
+          if(e.pageY > Yclient){
 
-        if(e.pageY > Yclient){
-
-          Yclient = e.pageY;
-
-          if(e.type === 'touchmove'){
-
-            Yclient = e.touches[0].pageY;
-
+            Yclient = e.pageY;
+ 
           }
 
+        } 
+
+        //Mobile
+        if(isMobile){
+
+          Xadd = 0;
+          Yadd = 0;
+ 
+          Xclient = e.touches[0].clientX;
+          Yclient = e.touches[0].clientY;
+
+          if(e.pageY > Yclient){
+ 
+            Yclient = e.touches[0].pageY;
+ 
+          }
+           
         }
-
-         
-
+        
         showTouchX = Xclient;
         showTouchY = Yclient;
  
-        root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - 80}px`);
+        root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
         root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
         root.style.setProperty(`--articleZindex${this.state.moveElement}`,`+1`);
       }
@@ -386,44 +398,55 @@ export class Display extends React.Component {
     }
 
     //Show help screen...
- 
- 
-    return(
-       
-      <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)} onMouseMove={(e)=>this.moveEnabled(e)}>
-        <List 
-          selectedArticle={this.state.moveElement} 
-          clickToEnable={this.clickToEnable} 
-          moveEnabled={this.moveEnabled}
-        />
-
-        {this.state.showAddArticle && 
-          <AddArticleForm 
-            onSubmit={this.submitForm}
-            deleteForm={this.deleteForm}
-            articleCount={this.props.articles.length}
-            mode={this.state.mode}
-            handle={this.state.moveElement}
-            articles={this.props.articles}
-            initialValues={theArticle}
-        />}
-        
-        <ToolBox 
-          newArticle={this.newArticle}
-          editArticle={this.editArticle} 
-          clickToEnable={this.clickToEnable}
-          showHelp={this.showHelp}
-        />
     
-        <div className='HeadlineContainer'>POST IT!
-        <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+    //Destop version
+    if(!isMobile){
+  
+      return(
+       
+        <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)} onMouseMove={(e)=>this.moveEnabled(e)}>
+          <List 
+            selectedArticle={this.state.moveElement} 
+            clickToEnable={this.clickToEnable} 
+            moveEnabled={this.moveEnabled}
+          />
+  
+          {this.state.showAddArticle && 
+            <AddArticleForm 
+              onSubmit={this.submitForm}
+              deleteForm={this.deleteForm}
+              articleCount={this.props.articles.length}
+              mode={this.state.mode}
+              handle={this.state.moveElement}
+              articles={this.props.articles}
+              initialValues={theArticle}
+          />}
+          
+          <ToolBox 
+            newArticle={this.newArticle}
+            editArticle={this.editArticle} 
+            clickToEnable={this.clickToEnable}
+            showHelp={this.showHelp}
+          />
+      
+          <div className='HeadlineContainer'>POST IT!
+          <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+          </div>
+          {this.state.showHelp && <Help/>} 
+          touchX = {showTouchX}
+          touchY = {showTouchY}
+          showEventType = {showEventType}
         </div>
-        {this.state.showHelp && <Help/>} 
-        touchX = {showTouchX}
-        touchY = {showTouchY}
-        showEventType = {showEventType}
-      </div>
- 
+   
+      )
+
+
+    }
+   
+    return(
+
+      <div>MOBILE VERSION NOT ACTIVE YET</div>
+
     )
  
   }
