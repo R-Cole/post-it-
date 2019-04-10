@@ -14,6 +14,18 @@ root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
+
+if(!isMobile){
+  root.style.setProperty('--articleW',`${300}px`);
+  root.style.setProperty('--articleH',`${300}px`);
+}
+else{
+  root.style.setProperty('--articleW',`${100}px`);
+  root.style.setProperty('--articleH',`${100}px`);
+}
+
+
+
 let showTouchX;
 let showTouchY;
 let showEventType;
@@ -302,13 +314,16 @@ export class Display extends React.Component {
  
           }
 
+          root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
+          root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
+
         } 
 
         //Mobile
-        if(isMobile){
+        if(isMobile && e.type === 'touchmove'){
 
-          Xadd = 0;
-          Yadd = 0;
+          Xadd = 50;
+          Yadd = 50;
  
           Xclient = e.touches[0].clientX;
           Yclient = e.touches[0].clientY;
@@ -318,14 +333,16 @@ export class Display extends React.Component {
             Yclient = e.touches[0].pageY;
  
           }
-           
+
+          root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
+          root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
+            
         }
         
         showTouchX = Xclient;
         showTouchY = Yclient;
  
-        root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
-        root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
+        
         root.style.setProperty(`--articleZindex${this.state.moveElement}`,`+1`);
       }
   
@@ -400,7 +417,7 @@ export class Display extends React.Component {
     //Show help screen...
     
     //Destop version
-    if(!isMobile){
+    //if(!isMobile){
   
       return(
        
@@ -433,21 +450,21 @@ export class Display extends React.Component {
           <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
           </div>
           {this.state.showHelp && <Help/>} 
-          touchX = {showTouchX}
+          {/* touchX = {showTouchX}
           touchY = {showTouchY}
-          showEventType = {showEventType}
+          showEventType = {showEventType} */}
         </div>
    
       )
 
 
-    }
+    //}
    
-    return(
+    // return(
 
-      <div>MOBILE VERSION NOT ACTIVE YET</div>
+    //   <div>MOBILE VERSION NOT ACTIVE YET</div>
 
-    )
+    // )
  
   }
  

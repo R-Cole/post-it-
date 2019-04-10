@@ -62,8 +62,8 @@ body {
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 6px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
-  width: 300px;
-  height: 300px;
+  width: var(--articleW);
+  height: var(--articleH);
 }
 
 .toolBoxContainer {
@@ -171,8 +171,8 @@ body {
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
   color: darkblue;
-  width: 300px;
-  height: 300px;
+  width: var(--articleW);
+  height: var(--articleH);
 }
 
 .ArticleTitle {
