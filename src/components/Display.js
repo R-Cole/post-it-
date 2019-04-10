@@ -15,6 +15,7 @@ root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
 let showTouchX;
 let showTouchY;
+let showEventType;
  
 export class Display extends React.Component {
   
@@ -201,20 +202,19 @@ export class Display extends React.Component {
 
   //enable movement or select article in EDIT mode
   clickToEnable(e,handle){
+
+    showEventType = e.type;
+     
+    e.preventDefault(); 
+
+      console.log('mouse down!')
+ 
     
     //activate movement
 
     //OFF
     if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
-
-      if(e.type === 'touchstart'){
-
-        onclick.call(this, e); 
-        e.stopPropagation(); 
-        e.preventDefault(); 
-
-      }
-
+ 
       root.style.setProperty('--cursorHand','auto'); 
       root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
  
@@ -227,13 +227,13 @@ export class Display extends React.Component {
     //ON
     if(!this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
 
-      if(e.type === 'touchstart'){
-
-            onclick.call(this, e); 
-            e.stopPropagation(); 
-            e.preventDefault(); 
+      // if(e.type === 'touchstart'){
  
-      }
+      //       onclick.call(this, e); 
+      //       e.stopPropagation(); 
+      //       e.preventDefault(); 
+ 
+      // }
    
       this.setState({
         moveElement: handle,
@@ -265,7 +265,13 @@ export class Display extends React.Component {
   //moves whatever element is active
   moveEnabled(e){
 
-    e.preventDefault();
+    showEventType = e.type;
+
+    e.preventDefault(); 
+
+    console.log('e type? ',e.type);
+
+    //e.preventDefault();
  
     if(this.state.mode === 'ready' && this.state.moveEnabled){
  
@@ -281,7 +287,9 @@ export class Display extends React.Component {
         let Yclient = e.clientY;
 
         if(e.type === 'touchmove'){
- 
+
+          console.log('touch move ',e.type);
+           
           Xclient = e.touches[0].clientX;
           Yclient = e.touches[0].clientY;
            
@@ -298,6 +306,8 @@ export class Display extends React.Component {
           }
 
         }
+
+         
 
         showTouchX = Xclient;
         showTouchY = Yclient;
@@ -350,9 +360,7 @@ export class Display extends React.Component {
       })
  
     }
-
-
-
+ 
   }
 
   render(){
@@ -378,11 +386,11 @@ export class Display extends React.Component {
     }
 
     //Show help screen...
-
+ 
  
     return(
        
-      <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)} onTouchMove={(e)=>this.moveEnabled(e)}>
+      <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)} onMouseMove={(e)=>this.moveEnabled(e)}>
         <List 
           selectedArticle={this.state.moveElement} 
           clickToEnable={this.clickToEnable} 
@@ -413,6 +421,7 @@ export class Display extends React.Component {
         {this.state.showHelp && <Help/>} 
         touchX = {showTouchX}
         touchY = {showTouchY}
+        showEventType = {showEventType}
       </div>
  
     )
