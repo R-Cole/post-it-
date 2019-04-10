@@ -51,7 +51,7 @@ export class List extends React.Component {
       });
 
       return (
-        <div onMouseMove={(e)=>this.props.moveEnabled(e)} > 
+        <div onTouchMove={(e)=>this.moveEnabled(e)} onMouseMove={(e)=>this.props.moveEnabled(e)} > 
           <ul className='ArticleContainer'>
             {theArticleList}
           </ul>
