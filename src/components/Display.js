@@ -13,6 +13,8 @@ root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
+let showTouchX;
+let showTouchY;
  
 export class Display extends React.Component {
   
@@ -205,6 +207,14 @@ export class Display extends React.Component {
     //OFF
     if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
 
+      if(e.type === 'touchstart'){
+
+        onclick.call(this, e); 
+        e.stopPropagation(); 
+        e.preventDefault(); 
+
+      }
+
       root.style.setProperty('--cursorHand','auto'); 
       root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
  
@@ -216,6 +226,14 @@ export class Display extends React.Component {
     }
     //ON
     if(!this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
+
+      if(e.type === 'touchstart'){
+
+            onclick.call(this, e); 
+            e.stopPropagation(); 
+            e.preventDefault(); 
+ 
+      }
    
       this.setState({
         moveElement: handle,
@@ -280,6 +298,9 @@ export class Display extends React.Component {
           }
 
         }
+
+        showTouchX = Xclient;
+        showTouchY = Yclient;
  
         root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - 80}px`);
         root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
@@ -390,7 +411,8 @@ export class Display extends React.Component {
         <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
         </div>
         {this.state.showHelp && <Help/>} 
- 
+        touchX = {showTouchX}
+        touchY = {showTouchY}
       </div>
  
     )
