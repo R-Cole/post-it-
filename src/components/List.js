@@ -34,7 +34,7 @@ export class List extends React.Component {
           style={posStyle[handle]}
           key= {handle} 
           className='Article'
-          ontouchstart={(e)=>this.props.clickToEnable(e,handle)}
+          onTouchStart={(e)=>this.props.clickToEnable(e,handle)}
           onClick={(e)=>this.props.clickToEnable(e,handle)}>
           <span className='ArticleId'>
             #{item.articleId}
