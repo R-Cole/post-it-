@@ -213,16 +213,11 @@ export class Display extends React.Component {
  
   }
 
-  //enable movement or select article in EDIT mode
+  //enable/disable movement or select article in EDIT mode
   clickToEnable(e,handle){
-
-    showEventType = e.type;
-     
-    e.preventDefault(); 
-
-      console.log('mouse down!')
  
-    
+    e.preventDefault(); 
+ 
     //activate movement
 
     //OFF
@@ -415,47 +410,68 @@ export class Display extends React.Component {
     }
 
     //Show help screen...
+
+    const mainContent = 
+    <React.Fragment> 
+      <List 
+        selectedArticle={this.state.moveElement} 
+        clickToEnable={this.clickToEnable} 
+        moveEnabled={this.moveEnabled}
+      />
+      {this.state.showAddArticle && 
+      <AddArticleForm 
+        onSubmit={this.submitForm}
+        deleteForm={this.deleteForm}
+        articleCount={this.props.articles.length}
+        mode={this.state.mode}
+        handle={this.state.moveElement}
+        articles={this.props.articles}
+        initialValues={theArticle}
+      />}
+      <ToolBox 
+        newArticle={this.newArticle}
+        editArticle={this.editArticle} 
+        clickToEnable={this.clickToEnable}
+        showHelp={this.showHelp}
+      />
+      <div className='HeadlineContainer'>POST IT!
+        <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+      </div>
+      {this.state.showHelp && <Help/>} 
+      {/* touchX = {showTouchX}
+        touchY = {showTouchY}
+        showEventType = {showEventType} */}
     
-    //Destop version
-    //if(!isMobile){
-  
-      return(
+      </React.Fragment>
+
+
+      //Destop version
+      if(!isMobile){
+
+        return(
        
-        <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)} onMouseMove={(e)=>this.moveEnabled(e)}>
-          <List 
-            selectedArticle={this.state.moveElement} 
-            clickToEnable={this.clickToEnable} 
-            moveEnabled={this.moveEnabled}
-          />
-  
-          {this.state.showAddArticle && 
-            <AddArticleForm 
-              onSubmit={this.submitForm}
-              deleteForm={this.deleteForm}
-              articleCount={this.props.articles.length}
-              mode={this.state.mode}
-              handle={this.state.moveElement}
-              articles={this.props.articles}
-              initialValues={theArticle}
-          />}
-          
-          <ToolBox 
-            newArticle={this.newArticle}
-            editArticle={this.editArticle} 
-            clickToEnable={this.clickToEnable}
-            showHelp={this.showHelp}
-          />
-      
-          <div className='HeadlineContainer'>POST IT!
-          <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+          <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)}>
+            {mainContent}
           </div>
-          {this.state.showHelp && <Help/>} 
-          {/* touchX = {showTouchX}
-          touchY = {showTouchY}
-          showEventType = {showEventType} */}
-        </div>
-   
-      )
+     
+        )
+ 
+      }
+
+      //Mobile version
+      if(isMobile){
+
+        return(
+       
+          <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)}>
+            {mainContent}
+          </div>
+     
+        )
+ 
+      }
+  
+      
  
     //}
    
