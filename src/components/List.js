@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 const posStyle = [];
  
 export class List extends React.Component {
@@ -27,15 +28,20 @@ export class List extends React.Component {
           left: `var(--articleLeft${handle})`,
           zIndex: `var(--articleZindex${handle})`
         }
-   
-        return (
+
+      let listContent = null;  
+
+      //is Desktop 
+      if(!isMobile){
+
+        listContent =
         
-        <li 
-          style={posStyle[handle]}
-          key= {handle} 
-          className='Article'
-          onTouchStart={(e)=>this.props.clickToEnable(e,handle)}
-          onClick={(e)=>this.props.clickToEnable(e,handle)}>
+          <li 
+            style={posStyle[handle]}
+            key= {handle} 
+            className='Article'
+            onClick={(e)=>this.props.clickToEnable(e,handle)}
+          >
           <span className='ArticleId'>
             #{item.articleId}
           </span>
@@ -44,9 +50,40 @@ export class List extends React.Component {
             <p className='ArticleContent'>{item.content}</p>
             <span className='ArticleBy'>posted by {item.author}</span>
           </div>
-        </li>
-       
-        )
+          </li>
+        
+      } 
+      
+      //is Mobile 
+      if(isMobile){
+
+        listContent =
+        
+          <li 
+            style={posStyle[handle]}
+            key= {handle} 
+            className='Article'
+            onTouchStart={(e)=>this.props.clickToEnable(e,handle)}
+            onTouchEnd={(e)=>this.props.clickToEnable(e,handle)}
+          >
+          <span className='ArticleId'>
+            #{item.articleId}
+          </span>
+           <div>
+            <span className='ArticleTitle'>{item.title}</span>
+            <p className='ArticleContent'>{item.content}</p>
+            <span className='ArticleBy'>posted by {item.author}</span>
+          </div>
+          </li>
+        
+      } 
+
+      return (
+
+        listContent
+
+      )
+        
        
       });
 

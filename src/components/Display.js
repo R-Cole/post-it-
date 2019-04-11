@@ -220,8 +220,10 @@ export class Display extends React.Component {
  
     //activate movement
 
-    //OFF
-    if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
+    if(!isMobile){
+ 
+      //OFF
+      if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
  
       root.style.setProperty('--cursorHand','auto'); 
       root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
@@ -231,9 +233,9 @@ export class Display extends React.Component {
         moveEnabled: false,
         showHelp: false
       })
-    }
-    //ON
-    if(!this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
+      }
+      //ON
+      if(!this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
 
       // if(e.type === 'touchstart'){
  
@@ -249,10 +251,10 @@ export class Display extends React.Component {
         showHelp: false
       })
 
-    }
+      }
 
-    //select post to edit
-    if(this.state.mode === 'select'){
+      //select post to edit
+      if(this.state.mode === 'select'){
   
       this.setState({
         mode: 'edit',
@@ -266,8 +268,75 @@ export class Display extends React.Component {
       root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
       root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
  
-    }//end select
+      }//end select
+ 
+    }
+
+    if(isMobile){
+
+       //OFF
+       if(
+          e.type === 'touchend' &&
+          this.state.moveEnabled &&
+          this.state.mode !== 'add' &&
+          this.state.mode !== 'select'
+       ){
+ 
+          root.style.setProperty('--cursorHand','auto'); 
+          root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
+   
+          this.setState({
+            moveElement: null,
+            moveEnabled: false,
+            showHelp: false
+          })
+        }
+ 
+        //ON
+        if(
+           e.type === 'touchstart' &&
+           !this.state.moveEnabled &&
+           this.state.mode !== 'add' &&
+           this.state.mode !== 'select'
+        ){
+    
+          this.setState({
+            moveElement: handle,
+            moveEnabled: true,
+            showHelp: false
+          })
   
+        }
+  
+        //select post to edit
+        if(e.type === 'touchstart' && this.state.mode === 'select'){
+    
+          this.setState({
+            mode: 'edit',
+            moveElement: handle,
+            moveEnabled: false,
+            showAddArticle: true,
+            showHelp: false
+          })
+   
+          //put add article form on top of current selection 
+          root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
+          root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
+   
+        }//end select
+
+
+    }
+
+  
+  }
+
+  mobileMoveDisable(e){
+
+
+
+
+
   }
   
   //moves whatever element is active
@@ -411,8 +480,12 @@ export class Display extends React.Component {
 
     //Show help screen...
 
-    const mainContent = 
-    <React.Fragment> 
+
+      //Destop version
+      if(!isMobile){
+ 
+       const mainContent = 
+        <React.Fragment> 
       <List 
         selectedArticle={this.state.moveElement} 
         clickToEnable={this.clickToEnable} 
@@ -443,11 +516,7 @@ export class Display extends React.Component {
         showEventType = {showEventType} */}
     
       </React.Fragment>
-
-
-      //Destop version
-      if(!isMobile){
-
+ 
         return(
        
           <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)}>
@@ -461,6 +530,39 @@ export class Display extends React.Component {
       //Mobile version
       if(isMobile){
 
+        const mainContent = 
+        <React.Fragment> 
+          <List 
+            selectedArticle={this.state.moveElement} 
+        clickToEnable={this.clickToEnable} 
+            moveEnabled={this.moveEnabled}
+          />
+        {this.state.showAddArticle && 
+        <AddArticleForm 
+          onSubmit={this.submitForm}
+          deleteForm={this.deleteForm}
+          articleCount={this.props.articles.length}
+          mode={this.state.mode}
+          handle={this.state.moveElement}
+          articles={this.props.articles}
+          initialValues={theArticle}
+        />}
+        <ToolBox 
+          newArticle={this.newArticle}
+          editArticle={this.editArticle} 
+          clickToEnable={this.clickToEnable}
+          showHelp={this.showHelp}
+        />
+        <div className='HeadlineContainer'>POST IT!
+          <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+        </div>
+        {this.state.showHelp && <Help/>} 
+        {/* touchX = {showTouchX}
+          touchY = {showTouchY}
+          showEventType = {showEventType} */}
+      
+      </React.Fragment>
+ 
         return(
        
           <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)}>
