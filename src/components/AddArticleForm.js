@@ -3,11 +3,27 @@ import { reduxForm, Field } from 'redux-form';
  
 export class AddArticleForm extends React.Component{
 
+ 
+
   render(){
+
+    let m_AddArticleContainer = 'AddArticleContainer';
+    let m_submitFormButton = 'submitFormButton';
+    let m_deleteFormButton ='deleteFormButton';
+
+
+    if(this.props.mobile){
+
+      //use mobile classes
+      m_AddArticleContainer = 'mobile_AddArticleContainer';
+      m_submitFormButton = 'mobile_submitFormButton';
+      m_deleteFormButton ='mobile_deleteFormButton';
+      
+    }
  
     return (
       <React.Fragment>
-      <form className='AddArticleContainer' onSubmit={this.props.handleSubmit} >
+      <form className={m_AddArticleContainer} onSubmit={this.props.handleSubmit} >
         <div>
           <label className='formHL' htmlFor='title'></label><br/>
           <Field 
@@ -44,8 +60,8 @@ export class AddArticleForm extends React.Component{
             maxLength='30'
           />
         </div>
-        <button className='submitFormButton' type='submit'>SAVE</button>
-        <button onClick={()=>this.props.deleteForm()} className='deleteFormButton' type='delete'>DELETE</button>
+        <button className={m_submitFormButton} type='submit'>SAVE</button>
+        <button onClick={()=>this.props.deleteForm()} className={m_deleteFormButton} type='delete'>DELETE</button>
       </form>
       </React.Fragment>
  

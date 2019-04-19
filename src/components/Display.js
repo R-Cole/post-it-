@@ -15,16 +15,18 @@ root.style.setProperty('--cursorHand','auto');
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
 
+
+//Not mobile -- full movement capablilites...
 if(!isMobile){
   root.style.setProperty('--articleW',`${300}px`);
   root.style.setProperty('--articleH',`${300}px`);
 }
+//Mobile grid all with Title only -- zoom to note with touch...
 else{
   root.style.setProperty('--articleW',`${100}px`);
   root.style.setProperty('--articleH',`${100}px`);
 }
-
-
+ 
 
 let showTouchX;
 let showTouchY;
@@ -481,7 +483,7 @@ export class Display extends React.Component {
     //Show help screen...
 
 
-      //Destop version
+      //Desktop version
       if(!isMobile){
  
        const mainContent = 
@@ -500,17 +502,19 @@ export class Display extends React.Component {
         handle={this.state.moveElement}
         articles={this.props.articles}
         initialValues={theArticle}
+        mobile={false}
       />}
       <ToolBox 
         newArticle={this.newArticle}
         editArticle={this.editArticle} 
         clickToEnable={this.clickToEnable}
         showHelp={this.showHelp}
+        mobile={false}
       />
       <div className='HeadlineContainer'>POST IT!
         <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
       </div>
-      {this.state.showHelp && <Help/>} 
+      {this.state.showHelp && <Help mobile={false}/>} 
       {/* touchX = {showTouchX}
         touchY = {showTouchY}
         showEventType = {showEventType} */}
@@ -534,7 +538,7 @@ export class Display extends React.Component {
         <React.Fragment> 
           <List 
             selectedArticle={this.state.moveElement} 
-        clickToEnable={this.clickToEnable} 
+            clickToEnable={this.clickToEnable} 
             moveEnabled={this.moveEnabled}
           />
         {this.state.showAddArticle && 
@@ -546,17 +550,19 @@ export class Display extends React.Component {
           handle={this.state.moveElement}
           articles={this.props.articles}
           initialValues={theArticle}
+          mobile={true}
         />}
         <ToolBox 
           newArticle={this.newArticle}
           editArticle={this.editArticle} 
           clickToEnable={this.clickToEnable}
           showHelp={this.showHelp}
+          mobile={true}
         />
-        <div className='HeadlineContainer'>POST IT!
-          <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+        <div className='mobile_HeadlineContainer'>POST IT!
+          <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
         </div>
-        {this.state.showHelp && <Help/>} 
+        {this.state.showHelp && <Help mobile={true}/>} 
         {/* touchX = {showTouchX}
           touchY = {showTouchY}
           showEventType = {showEventType} */}

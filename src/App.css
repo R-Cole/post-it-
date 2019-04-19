@@ -285,3 +285,133 @@ body {
 .smallLineBreak {
   line-height: 5px;
 }
+
+
+
+.mobile_taskBar {
+  filter: drop-shadow(0 0 0.75rem rgb(1, 1, 2));
+  border-radius: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: stretch;
+  height: 40px;
+  background-color: #576379;
+}
+
+
+.mobile_newPostbutton {
+  color: rgb(24, 20, 58);
+  position: absolute;
+  top: 9px;
+  left: 175px;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+
+.mobile_editPostbutton {
+  color: rgb(24, 20, 58);
+  position: absolute;
+  top: 9px;
+  left: 260px;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+.mobile_helpButton {
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  top: 0px;
+  left: 107px;
+  width: 24px;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: rgb(255, 145, 0);
+  filter: drop-shadow(0 0 0.12rem rgb(110, 50, 1));
+}
+
+.mobile_AddArticleContainer {
+  position: absolute;
+  /* top: 20px;
+  left: 300px; */
+  display: inline-block;
+  top: 45px;
+  left: 37px;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  color: darkblue;
+  width: 300px;
+  height: 250px;
+}
+
+.mobile_submitFormButton{
+  color: rgb(24, 20, 58);
+  border-radius: 5px;
+  font-size: 20px;
+  position: flex;
+  /* top: 125px;
+  left: 340px; */
+  margin-top: 30px;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+.mobile_deleteFormButton{
+  color: rgb(226, 0, 0);
+  border-radius: 5px;
+  font-size: 20px;
+  position: flex;
+  /* top: 125px;
+  left: 450px; */
+  margin-top: 30px;
+  margin-left: 30px;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
+  filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
+}
+
+.mobile_HeadlineContainer {
+  z-index: +1;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 100px;
+  height: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 5px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
+  color: darkblue;
+}
+
+.mobile_HelpContainer {
+  z-index: +1;
+  border-radius: 5px;
+  background-color: rgb(255, 248, 217);
+  position: absolute;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  top: 55px;
+  left: 122px;
+  height: 250px;
+  width: 150px; 
+  word-wrap: break-word;
+}
