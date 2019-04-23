@@ -27,15 +27,9 @@ function ToolBox(props) {
          <button className='newPostbutton' onClick={(e)=> props.newArticle()}>NEW POST</button>
          <button className='editPostbutton' onClick={(e)=> props.editArticle()}>EDIT POST</button>
         </div>
-    
-    
-      )
-
-      
+     
+      ) 
     }
-
-    
- 
  
 }
 

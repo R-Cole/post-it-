@@ -5,6 +5,7 @@ import List from './List';
 import ToolBox from '../components/ToolBox';
 import Help from '../components/Help';
 import AddArticleForm from '../components/AddArticleForm';
+import ArticleZoom from '../components/ArticleZoom';
 import { addArticle, editArticle, deleteArticle } from '../actions/action';
 import HandCursor from '../assets/images/hand.png';
 
@@ -23,8 +24,8 @@ if(!isMobile){
 }
 //Mobile grid all with Title only -- zoom to note with touch...
 else{
-  root.style.setProperty('--articleW',`${100}px`);
-  root.style.setProperty('--articleH',`${100}px`);
+  root.style.setProperty('--articleW',`${300}px`);
+  root.style.setProperty('--articleH',`${70}px`);
 }
  
 
@@ -44,7 +45,9 @@ export class Display extends React.Component {
       moveEnabled: false,
       editAdd_X: null,
       editAdd_Y: null,
-      showHelp: true
+      showHelp: true,
+      zoom:false,
+      zoomElement: null
     }
 
     this.submitForm = this.submitForm.bind(this);
@@ -53,11 +56,46 @@ export class Display extends React.Component {
     this.clickToEnable = this.clickToEnable.bind(this);
     this.moveEnabled = this.moveEnabled.bind(this);
     this.showHelp = this.showHelp.bind(this);
+    this.zoomPost = this.zoomPost.bind(this);
   }
  
   //edit selected note
   editArticle = () => {
     
+    if(this.state.mode === 'zoomed' && this.props.articles.length > 0){
+       
+      let handle = this.state.zoomElement
+
+      const editedArticle = this.props.articles.map((item) =>{
+
+        if(item.articleId === handle){
+          return( 
+
+            {
+              articleId: handle,
+              title: item.title,
+              content: item.content,
+              author: item.author
+            }
+          )
+        } 
+        else return null
+  
+      });
+    
+      //Edit article action
+      this.props.dispatch(editArticle(editedArticle,handle));
+  
+      this.setState({
+        mode: 'edit',
+        moveElement: handle,
+        moveEnabled: false,
+        showAddArticle: true,
+        showHelp: false
+      })
+
+    }
+
     if(this.state.mode === 'ready' && this.props.articles.length > 0){
     
       this.setState({
@@ -217,13 +255,9 @@ export class Display extends React.Component {
 
   //enable/disable movement or select article in EDIT mode
   clickToEnable(e,handle){
- 
-    e.preventDefault(); 
- 
+   
     //activate movement
 
-    if(!isMobile){
- 
       //OFF
       if(this.state.moveEnabled && this.state.mode !== 'add' && this.state.mode !== 'select'){
  
@@ -272,60 +306,61 @@ export class Display extends React.Component {
  
       }//end select
  
-    }
+    
 
     if(isMobile){
 
-       //OFF
-       if(
-          e.type === 'touchend' &&
-          this.state.moveEnabled &&
-          this.state.mode !== 'add' &&
-          this.state.mode !== 'select'
-       ){
+      //  //OFF
+      //  if(
+      //     e.type === 'touchend' &&
+      //     this.state.moveEnabled &&
+      //     this.state.mode !== 'add' &&
+      //     this.state.mode !== 'select'
+      //  ){
  
-          root.style.setProperty('--cursorHand','auto'); 
-          root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
+      //     root.style.setProperty('--cursorHand','auto'); 
+      //     root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
    
-          this.setState({
-            moveElement: null,
-            moveEnabled: false,
-            showHelp: false
-          })
-        }
+      //     this.setState({
+      //       moveElement: null,
+      //       moveEnabled: false,
+      //       showHelp: false
+      //     })
+      //   }
  
-        //ON
-        if(
-           e.type === 'touchstart' &&
-           !this.state.moveEnabled &&
-           this.state.mode !== 'add' &&
-           this.state.mode !== 'select'
-        ){
+        // //ON
+        // if(
+        //    e.type === 'touchstart' &&
+        //    !this.state.moveEnabled &&
+        //    this.state.mode !== 'add' &&
+        //    this.state.mode !== 'select'
+        // ){
     
-          this.setState({
-            moveElement: handle,
-            moveEnabled: true,
-            showHelp: false
-          })
+        //   this.setState({
+        //     moveElement: handle,
+        //     moveEnabled: true,
+        //     showHelp: false
+        //   })
   
-        }
+        // }
   
         //select post to edit
-        if(e.type === 'touchstart' && this.state.mode === 'select'){
+
+        // if(e.type === 'touchstart' && this.state.mode === 'select'){
     
-          this.setState({
-            mode: 'edit',
-            moveElement: handle,
-            moveEnabled: false,
-            showAddArticle: true,
-            showHelp: false
-          })
+        //   this.setState({
+        //     mode: 'edit',
+        //     moveElement: handle,
+        //     moveEnabled: false,
+        //     showAddArticle: true,
+        //     showHelp: false
+        //   })
    
-          //put add article form on top of current selection 
-          root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
-          root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
+        //   //put add article form on top of current selection 
+        //   root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
+        //   root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
    
-        }//end select
+        // }//end select
 
 
     }
@@ -333,14 +368,6 @@ export class Display extends React.Component {
   
   }
 
-  mobileMoveDisable(e){
-
-
-
-
-
-  }
-  
   //moves whatever element is active
   moveEnabled(e){
 
@@ -363,8 +390,7 @@ export class Display extends React.Component {
       if(this.state.moveElement !== 'toolBox'){
 
         //Desktop
-        if(!isMobile){
-
+         
           Xadd = 80;
 
           //set custom hand cursor
@@ -382,28 +408,7 @@ export class Display extends React.Component {
 
           root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
           root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
-
-        } 
-
-        //Mobile
-        if(isMobile && e.type === 'touchmove'){
-
-          Xadd = 50;
-          Yadd = 50;
  
-          Xclient = e.touches[0].clientX;
-          Yclient = e.touches[0].clientY;
-
-          if(e.pageY > Yclient){
- 
-            Yclient = e.touches[0].pageY;
- 
-          }
-
-          root.style.setProperty(`--articleLeft${this.state.moveElement}`,`${Xclient - Xadd}px`);
-          root.style.setProperty(`--articleTop${this.state.moveElement}`,`${Yclient - Yadd}px`);
-            
-        }
         
         showTouchX = Xclient;
         showTouchY = Yclient;
@@ -458,6 +463,39 @@ export class Display extends React.Component {
  
   }
 
+  //Mobile enlarges/shrinks note
+  zoomPost(e,handle){
+
+    //select when in edit mode
+    if(this.state.mode === 'select'){
+      this.setState({
+        mode: 'edit',
+        moveElement: handle,
+        moveEnabled: false,
+        showAddArticle: true,
+        showHelp: false,
+        zoom: false,
+        zoomElement: null
+      })
+    }
+     
+    if(!this.state.zoom && this.state.mode === 'ready'){
+      this.setState({
+        mode: 'zoomed',
+        zoom: true,
+        zoomElement: handle
+      })
+    }
+    else if(this.state.zoom && this.state.mode === 'zoomed'){
+      this.setState({
+        mode: 'ready',
+        zoom: false,
+        zoomElement: null
+      })
+    }
+    
+  }
+
   render(){
 
     //Var holder for the initial values...
@@ -492,6 +530,7 @@ export class Display extends React.Component {
         selectedArticle={this.state.moveElement} 
         clickToEnable={this.clickToEnable} 
         moveEnabled={this.moveEnabled}
+        mobile={false}
       />
       {this.state.showAddArticle && 
       <AddArticleForm 
@@ -518,7 +557,7 @@ export class Display extends React.Component {
       {/* touchX = {showTouchX}
         touchY = {showTouchY}
         showEventType = {showEventType} */}
-    
+       
       </React.Fragment>
  
         return(
@@ -536,13 +575,14 @@ export class Display extends React.Component {
 
         const mainContent = 
         <React.Fragment> 
-          <List 
-            selectedArticle={this.state.moveElement} 
-            clickToEnable={this.clickToEnable} 
-            moveEnabled={this.moveEnabled}
-          />
+        <List
+          selectedArticle={this.state.moveElement} 
+          clickToZoom={this.zoomPost} 
+          mobile={true}
+        />
         {this.state.showAddArticle && 
         <AddArticleForm 
+          className='mobile_AddContainer'
           onSubmit={this.submitForm}
           deleteForm={this.deleteForm}
           articleCount={this.props.articles.length}
@@ -553,42 +593,42 @@ export class Display extends React.Component {
           mobile={true}
         />}
         <ToolBox 
-          newArticle={this.newArticle}
-          editArticle={this.editArticle} 
-          clickToEnable={this.clickToEnable}
-          showHelp={this.showHelp}
-          mobile={true}
-        />
+            newArticle={this.newArticle}
+            editArticle={this.editArticle} 
+            clickToEnable={this.clickToEnable}
+            showHelp={this.showHelp}
+            mobile={true}
+          />
         <div className='mobile_HeadlineContainer'>POST IT!
           <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
         </div>
-        {this.state.showHelp && <Help mobile={true}/>} 
+        {this.state.showHelp && <Help mobile={true} />} 
         {/* touchX = {showTouchX}
           touchY = {showTouchY}
           showEventType = {showEventType} */}
-      
+        {this.state.zoom &&
+          <ArticleZoom 
+            clickToZoom={this.zoomPost}
+            zoomElement={this.state.zoomElement}
+            articles={this.props.articles}
+          />}
       </React.Fragment>
  
         return(
-       
-          <div className='displayContainer' onTouchMove={(e)=>this.moveEnabled(e)}>
+          
+          <React.Fragment>
+          <div className='displayContainer'>
             {mainContent}
           </div>
-     
+          <div className='mobile_Stay'>
+          
+          </div>
+          </React.Fragment>
+           
         )
  
       }
   
-      
- 
-    //}
-   
-    // return(
-
-    //   <div>MOBILE VERSION NOT ACTIVE YET</div>
-
-    // )
- 
   }
  
 }

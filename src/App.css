@@ -141,7 +141,7 @@ body {
   border: none;
   padding: 10px;
   border-radius: 2px;
-  margin-left: -120px;
+  margin-left: -90px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
   filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
@@ -155,7 +155,7 @@ body {
   border: none;
   padding: 10px;
   border-radius: 2px;
-  margin-left: 30px;
+  margin-left: 0px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
   filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
 }
@@ -196,7 +196,6 @@ body {
   width: 280px;
   word-wrap: break-word;
 }
-
  
 .ArticleBy {
   color: darkblue;
@@ -285,13 +284,18 @@ body {
 .smallLineBreak {
   line-height: 5px;
 }
+ 
+.ListContainer {
+  list-style: none;
+}
+ 
 
-
-
+/*----------> Mobile Styles <------------*/
+ 
 .mobile_taskBar {
   filter: drop-shadow(0 0 0.75rem rgb(1, 1, 2));
   border-radius: 0px;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: inline-block;
@@ -299,12 +303,11 @@ body {
   height: 40px;
   background-color: #576379;
 }
-
-
+ 
 .mobile_newPostbutton {
   color: rgb(24, 20, 58);
   position: absolute;
-  top: 9px;
+  top: 7px;
   left: 175px;
   border: none;
   padding: 5px;
@@ -317,7 +320,7 @@ body {
 .mobile_editPostbutton {
   color: rgb(24, 20, 58);
   position: absolute;
-  top: 9px;
+  top: 7px;
   left: 260px;
   border: none;
   padding: 5px;
@@ -330,8 +333,8 @@ body {
   font-size: 15px;
   font-weight: bold;
   color: rgb(255, 255, 255);
-  position: absolute;
-  top: 0px;
+  position: fixed;
+  top: -1px;
   left: 107px;
   width: 24px;
   border: none;
@@ -339,6 +342,10 @@ body {
   border-radius: 4px;
   background-color: rgb(255, 145, 0);
   filter: drop-shadow(0 0 0.12rem rgb(110, 50, 1));
+}
+
+.mobile_AddContainer {
+  display: flex;
 }
 
 .mobile_AddArticleContainer {
@@ -353,7 +360,7 @@ body {
   background-color: rgb(255, 255, 255);
   color: darkblue;
   width: 300px;
-  height: 250px;
+  height: 245px;
 }
 
 .mobile_submitFormButton{
@@ -363,7 +370,7 @@ body {
   position: flex;
   /* top: 125px;
   left: 340px; */
-  margin-top: 30px;
+  margin-top: 20px;
   border: none;
   padding: 10px;
   border-radius: 2px;
@@ -378,7 +385,7 @@ body {
   position: flex;
   /* top: 125px;
   left: 450px; */
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: 30px;
   border: none;
   padding: 10px;
@@ -389,7 +396,7 @@ body {
 
 .mobile_HeadlineContainer {
   z-index: +1;
-  position: absolute;
+  position: fixed;
   top: 7px;
   left: 7px;
   width: 100px;
@@ -414,4 +421,38 @@ body {
   height: 250px;
   width: 150px; 
   word-wrap: break-word;
+}
+
+.mobile_Stay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.mobile_ListContainer {
+  display: center;
+  list-style: none;
+  margin-top: 50px;
+}
+
+.mobile_ArticleTitle {
+  top: 25px;
+  position: absolute;
+  margin-left: -140px;
+  font-style: bold;
+  font-size: 25px;
+  line-height: 25px;
+  color: darkblue;
+  width: 280px; 
+}
+
+.mobile_Zoom {
+  position: absolute;
+  margin-left: 40px;
+  top: 50px;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 6px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
+  width: 300px;
+  height: 300px;
 }

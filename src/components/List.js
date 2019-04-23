@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { isMobile } from 'react-device-detect';
 const posStyle = [];
  
 export class List extends React.Component {
@@ -15,26 +14,27 @@ export class List extends React.Component {
     }
     
     render() {
+
+      let m_ListContainer='ListContainer';
  
       const theArticleList = this.props.articles.length === 0
       ? 'No Posts Yet...'
       : this.props.articles.map((item,index) => {
 
         let handle = item.articleId;
+        let listContent = null;  
+ 
+        //is Desktop 
+        if(!this.props.mobile){
 
-        posStyle[handle] = {
-          position: 'absolute',
-          top: `var(--articleTop${handle})`,
-          left: `var(--articleLeft${handle})`,
-          zIndex: `var(--articleZindex${handle})`
-        }
-
-      let listContent = null;  
-
-      //is Desktop 
-      if(!isMobile){
-
-        listContent =
+          posStyle[handle] = {
+            position: 'absolute',
+            top: `var(--articleTop${handle})`,
+            left: `var(--articleLeft${handle})`,
+            zIndex: `var(--articleZindex${handle})`
+          }
+   
+          listContent =
         
           <li 
             style={posStyle[handle]}
@@ -52,36 +52,44 @@ export class List extends React.Component {
           </div>
           </li>
         
-      } 
+        } 
       
-      //is Mobile 
-      if(isMobile){
+        //is Mobile 
+        if(this.props.mobile){
 
-        listContent =
+          m_ListContainer='mobile_ListContainer' 
+
+          posStyle[handle] = {
+            position: 'absolute',
+            top: `var(--articleTop${handle})`,
+            left: `var(--articleLeft${handle})`,
+            zIndex: `var(--articleZindex${handle})`
+          }
+   
+          listContent =
         
           <li 
-            style={posStyle[handle]}
+            // style={posStyle[handle]}
             key= {handle} 
             className='Article'
-            onTouchStart={(e)=>this.props.clickToEnable(e,handle)}
-            onTouchEnd={(e)=>this.props.clickToEnable(e,handle)}
+            onClick={(e)=>this.props.clickToZoom(e,handle)}
           >
           <span className='ArticleId'>
             #{item.articleId}
           </span>
            <div>
-            <span className='ArticleTitle'>{item.title}</span>
+            <span className='mobile_ArticleTitle'>{item.title}</span>
             <p className='ArticleContent'>{item.content}</p>
             <span className='ArticleBy'>posted by {item.author}</span>
           </div>
           </li>
         
-      } 
+        } 
 
       return (
-
+         
         listContent
-
+         
       )
         
        
@@ -91,7 +99,7 @@ export class List extends React.Component {
 
       return (
         <div> 
-          <ul className='ArticleContainer'>
+          <ul className={m_ListContainer}>
             {theArticleList}
           </ul>
         </div>

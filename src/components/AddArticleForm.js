@@ -18,7 +18,7 @@ export class AddArticleForm extends React.Component{
       m_AddArticleContainer = 'mobile_AddArticleContainer';
       m_submitFormButton = 'mobile_submitFormButton';
       m_deleteFormButton ='mobile_deleteFormButton';
-      
+
     }
  
     return (
@@ -60,9 +60,13 @@ export class AddArticleForm extends React.Component{
             maxLength='30'
           />
         </div>
-        <button className={m_submitFormButton} type='submit'>SAVE</button>
-        <button onClick={()=>this.props.deleteForm()} className={m_deleteFormButton} type='delete'>DELETE</button>
+        <div>
+          <button className={m_submitFormButton} type='submit'>SAVE</button>
+          <button onClick={()=>this.props.deleteForm()} className={m_deleteFormButton} type='delete'>DELETE</button>
+        </div>
+        
       </form>
+      
       </React.Fragment>
  
     )

@@ -9,9 +9,7 @@ export default function Help(props){
   }
 
   return(
-
-    
-
+ 
     <div className = {m_HelpContainer}>
       <div className = 'HelpText'>
       Click on a Post or the Toolbox to move it<br/>
