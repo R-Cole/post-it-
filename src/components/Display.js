@@ -599,9 +599,10 @@ export class Display extends React.Component {
             showHelp={this.showHelp}
             mobile={true}
           />
-        <div className='mobile_HeadlineContainer'>POST IT!
-          <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
+        <div className='mobile_HeadlineContainer'>
+          POST IT!
         </div>
+        <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
         {this.state.showHelp && <Help mobile={true} />} 
         {/* touchX = {showTouchX}
           touchY = {showTouchY}
