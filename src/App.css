@@ -463,10 +463,9 @@ body {
 }
 
 .mobile_ArticleTitle {
-  position: absolute;
-  left: 20px;
-  top: 5px;
-/*  
+  position: flex;
+  /* left: -77px;
+  top: -15px; 
   margin-left: -140px; */
   font-style: bold;
   font-size: 25px;
@@ -500,11 +499,12 @@ body {
  
 .mobile_ArticleBy {
   position: absolute;
-  left: 35px;
+  left: 0px;
   top: 50px;
   color: darkblue;
-  width: 250px;
+  width: 300px;
   font-size: 12px;
+  word-wrap: break-word;
   /* margin-left: -140px; */
 }
 
