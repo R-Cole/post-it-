@@ -74,13 +74,13 @@ export class List extends React.Component {
             className='mobile_Article'
             onClick={(e)=>this.props.clickToZoom(e,handle)}
           >
-          <span className='ArticleId'>
+          <span className='mobile_ArticleId'>
             #{item.articleId}
           </span>
            <div>
             <span className='mobile_ArticleTitle'>{item.title}</span>
             {/* <p className='ArticleContent'>{item.content}</p> */}
-            <span className='ArticleBy'>posted by {item.author}</span>
+            <span className='mobile_ArticleBy'>posted by {item.author}</span>
           </div>
           </li>
         
