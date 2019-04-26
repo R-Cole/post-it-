@@ -2,9 +2,7 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
  
 export class AddArticleForm extends React.Component{
-
  
-
   render(){
 
     let m_AddArticleContainer = 'AddArticleContainer';

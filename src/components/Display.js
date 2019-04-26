@@ -8,6 +8,7 @@ import AddArticleForm from '../components/AddArticleForm';
 import ArticleZoom from '../components/ArticleZoom';
 import { addArticle, editArticle, deleteArticle } from '../actions/action';
 import HandCursor from '../assets/images/hand.png';
+import { isNull } from 'util';
 
 const root = document.querySelector(':root');
 root.style.setProperty('--toolBoxTop', '95px');
@@ -47,7 +48,8 @@ export class Display extends React.Component {
       editAdd_Y: null,
       showHelp: true,
       zoom:false,
-      zoomElement: null
+      zoomElement: null,
+      editElement: null
     }
 
     this.submitForm = this.submitForm.bind(this);
@@ -62,38 +64,25 @@ export class Display extends React.Component {
   //edit selected note
   editArticle = () => {
     
-    if(this.state.mode === 'zoomed' && this.props.articles.length > 0){
+    //article is already zoomed in...
+    if(this.state.mode === 'zoomed' && this.props.articles.length > 0 ){
+
+      console.log('this.state.zoomElement = ',this.state.zoomElement);
        
-      let handle = this.state.zoomElement
+      let handle = this.state.zoomElement;
 
-      const editedArticle = this.props.articles.map((item) =>{
-
-        if(item.articleId === handle){
-          return( 
-
-            {
-              articleId: handle,
-              title: item.title,
-              content: item.content,
-              author: item.author
-            }
-          )
-        } 
-        else return null
-  
-      });
-    
-      //Edit article action
-      this.props.dispatch(editArticle(editedArticle,handle));
-  
       this.setState({
         mode: 'edit',
-        moveElement: handle,
+        moveElement: null,
         moveEnabled: false,
         showAddArticle: true,
-        showHelp: false
-      })
+        showHelp: false,
+        editElement: handle,
+        zoom: false,
+        zoomElement: null
 
+      })
+ 
     }
 
     if(this.state.mode === 'ready' && this.props.articles.length > 0){
@@ -119,15 +108,31 @@ export class Display extends React.Component {
     
     //ADD a new article
     if(this.state.mode === 'add'){
-
-      let id = 1;
-
+  
+      let id = 1;//for first id
+ 
+      //generate numeric id if articles array has more than 1 element...
       if(this.props.articles.length > 0){
+ 
+        //Sort for highest ID
+        function sortByScores(array, key){
+           return array.sort((a, b) => {
+            return b[key]-a[key];
+          });
+        }
 
-        id = this.props.articles[this.props.articles.length - 1].articleId + 1;
-
+        //deep copy array
+        const articlesCopy = [...this.props.articles];
+ 
+        //sort array based on highest id#
+        const highestIdArr = sortByScores(articlesCopy,'articleId');
+      
+        //set new id as highest + 1
+        id = highestIdArr[0].articleId + 1;
+   
       }
-       
+  
+      //set new article
       const newArticle = {
 
         articleId: id,
@@ -169,7 +174,7 @@ export class Display extends React.Component {
     //EDIT an existing article
     if(this.state.mode === 'edit'){
       
-      let handle = this.state.moveElement
+      let handle = this.state.editElement
 
       const editedArticle = {
 
@@ -187,7 +192,10 @@ export class Display extends React.Component {
       this.setState({
         mode: 'ready', 
         showAddArticle: false,
-        moveEnabled: false
+        moveEnabled: false,
+        zoomElement: null,
+        zoom: false,
+        editElement: null
       })
 
       //add randomness to start X and Y
@@ -213,7 +221,7 @@ export class Display extends React.Component {
     //dispatch delete action if note exists 
     if(this.state.mode === 'edit'){
 
-      this.props.dispatch(deleteArticle(this.state.moveElement));
+      this.props.dispatch(deleteArticle(this.state.editElement));
  
     }
 
@@ -221,7 +229,8 @@ export class Display extends React.Component {
     this.setState({
       mode: 'ready', 
       showAddArticle: false,
-      moveEnabled: false
+      moveEnabled: false,
+      editElement: null
     })
  
   }
@@ -246,7 +255,9 @@ export class Display extends React.Component {
         mode: 'add',
         showAddArticle: true,
         moveEnabled: false,
-        showHelp: false
+        showHelp: false,
+        zoomElement: null,
+        zoom: false
       })
  
     }
@@ -294,10 +305,11 @@ export class Display extends React.Component {
   
       this.setState({
         mode: 'edit',
-        moveElement: handle,
+        moveElement: null,
         moveEnabled: false,
         showAddArticle: true,
-        showHelp: false
+        showHelp: false,
+        editElement: handle
       })
  
       //put add article form on top of current selection 
@@ -306,66 +318,6 @@ export class Display extends React.Component {
  
       }//end select
  
-    
-
-    if(isMobile){
-
-      //  //OFF
-      //  if(
-      //     e.type === 'touchend' &&
-      //     this.state.moveEnabled &&
-      //     this.state.mode !== 'add' &&
-      //     this.state.mode !== 'select'
-      //  ){
- 
-      //     root.style.setProperty('--cursorHand','auto'); 
-      //     root.style.setProperty(`--articleZindex${this.state.moveElement}`,`0`);
-   
-      //     this.setState({
-      //       moveElement: null,
-      //       moveEnabled: false,
-      //       showHelp: false
-      //     })
-      //   }
- 
-        // //ON
-        // if(
-        //    e.type === 'touchstart' &&
-        //    !this.state.moveEnabled &&
-        //    this.state.mode !== 'add' &&
-        //    this.state.mode !== 'select'
-        // ){
-    
-        //   this.setState({
-        //     moveElement: handle,
-        //     moveEnabled: true,
-        //     showHelp: false
-        //   })
-  
-        // }
-  
-        //select post to edit
-
-        // if(e.type === 'touchstart' && this.state.mode === 'select'){
-    
-        //   this.setState({
-        //     mode: 'edit',
-        //     moveElement: handle,
-        //     moveEnabled: false,
-        //     showAddArticle: true,
-        //     showHelp: false
-        //   })
-   
-        //   //put add article form on top of current selection 
-        //   root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
-        //   root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
-   
-        // }//end select
-
-
-    }
-
-  
   }
 
   //moves whatever element is active
@@ -374,9 +326,7 @@ export class Display extends React.Component {
     showEventType = e.type;
 
     e.preventDefault(); 
-
-    console.log('e type? ',e.type);
-
+  
     //e.preventDefault();
  
     if(this.state.mode === 'ready' && this.state.moveEnabled){
@@ -465,20 +415,22 @@ export class Display extends React.Component {
 
   //Mobile enlarges/shrinks note
   zoomPost(e,handle){
-
-    //select when in edit mode
+ 
+    //select when zoomed in... 
     if(this.state.mode === 'select'){
       this.setState({
         mode: 'edit',
-        moveElement: handle,
+        moveElement: null,
         moveEnabled: false,
         showAddArticle: true,
         showHelp: false,
         zoom: false,
-        zoomElement: null
+        zoomElement: null,
+        editElement: handle
       })
     }
-     
+  
+    //not zoomed in... Ready mode
     if(!this.state.zoom && this.state.mode === 'ready'){
       this.setState({
         mode: 'zoomed',
@@ -486,6 +438,7 @@ export class Display extends React.Component {
         zoomElement: handle
       })
     }
+    //zoomed in... Zoomed mode
     else if(this.state.zoom && this.state.mode === 'zoomed'){
       this.setState({
         mode: 'ready',
@@ -500,12 +453,16 @@ export class Display extends React.Component {
 
     //Var holder for the initial values...
     let theArticle;
+
+    console.log('current mode= ',this.state.mode);
+    console.log('current zoom= ',this.state.zoom);
+    console.log('current editElement= ',this.state.editElement);
     
     //Populate form with exitsing information for EDIT mode or null for new...
     if(this.state.mode === 'edit'){
 
       //find article matching the articleId
-      let handle = this.state.moveElement;
+      let handle = this.state.editElement;
       theArticle = this.props.articles.find((item) => item.articleId === handle);
  
     } 
@@ -538,7 +495,7 @@ export class Display extends React.Component {
         deleteForm={this.deleteForm}
         articleCount={this.props.articles.length}
         mode={this.state.mode}
-        handle={this.state.moveElement}
+        handle={this.state.editElement}
         articles={this.props.articles}
         initialValues={theArticle}
         mobile={false}

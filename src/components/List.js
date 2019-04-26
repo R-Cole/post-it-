@@ -59,19 +59,19 @@ export class List extends React.Component {
 
           m_ListContainer='mobile_ListContainer' 
 
-          posStyle[handle] = {
-            position: 'absolute',
-            top: `var(--articleTop${handle})`,
-            left: `var(--articleLeft${handle})`,
-            zIndex: `var(--articleZindex${handle})`
-          }
+          // posStyle[handle] = {
+          //   position: 'absolute',
+          //   top: `var(--articleTop${handle})`,
+          //   left: `var(--articleLeft${handle})`,
+          //   zIndex: `var(--articleZindex${handle})`
+          // }
    
           listContent =
         
           <li 
             // style={posStyle[handle]}
-            key= {handle} 
-            className='Article'
+            key= {index} 
+            className='mobile_Article'
             onClick={(e)=>this.props.clickToZoom(e,handle)}
           >
           <span className='ArticleId'>

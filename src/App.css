@@ -183,7 +183,7 @@ body {
   font-size: 25px;
   line-height: 25px;
   color: darkblue;
-  width: 280px; 
+  width: 250px; 
 }
 
 .ArticleContent {
@@ -193,13 +193,13 @@ body {
   position: absolute;
   color:darkblue;
   margin-left: 10px;
-  width: 280px;
+  width: 250px;
   word-wrap: break-word;
 }
  
 .ArticleBy {
   color: darkblue;
-  width: 280px;
+  width: 250px;
   position: absolute;
   bottom: 5px;
   font-size: 12px;
@@ -361,6 +361,16 @@ body {
 
 .mobile_AddContainer {
   display: flex;
+}
+
+
+.mobile_Article {
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 6px;
+  /* background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102)); */
+  background-image: linear-gradient(rgb(198, 233, 250),rgb(102, 203, 250));
+  width: 300px;
+  height: 70px;
 }
 
 .mobile_AddArticleContainer {
