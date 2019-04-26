@@ -47,6 +47,31 @@ body {
   list-style: none;
 }
 
+ 
+.AddArticleContainer {
+  z-index: +1;
+  position: absolute;
+  /* top: 20px;
+  left: 300px; */
+  top: var(--addArticleTop);
+  left: var(--addArticleLeft);
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  color: darkblue;
+  width: var(--articleW);
+  height: var(--articleH);
+}
+
+
+.Article {
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 6px;
+  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
+  width: var(--articleW);
+  height: var(--articleH);
+}
+
 .ArticleId {
   position: absolute;
   top: 3px;
@@ -58,12 +83,35 @@ body {
   font-size: 12px;
 }
 
-.Article {
-  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
-  border-radius: 6px;
-  background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
-  width: var(--articleW);
-  height: var(--articleH);
+.ArticleTitle {
+  top: 31px;
+  position: absolute;
+  margin-left: -140px;
+  font-style: bold;
+  font-size: 25px;
+  line-height: 25px;
+  color: darkblue;
+  width: 250px; 
+}
+
+.ArticleContent {
+  font-size: 20px;
+  line-height: 21px;
+  top: 48px;
+  position: absolute;
+  color:darkblue;
+  margin-left: 10px;
+  width: 250px;
+  word-wrap: break-word;
+}
+ 
+.ArticleBy {
+  color: darkblue;
+  width: 250px;
+  position: absolute;
+  bottom: 5px;
+  font-size: 12px;
+  margin-left: -140px;
 }
 
 .toolBoxContainer {
@@ -158,52 +206,6 @@ body {
   margin-left: 0px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(103, 120, 153));
   filter: drop-shadow(0 0 0.12rem rgb(1, 1, 2));
-}
-
-.AddArticleContainer {
-  z-index: +1;
-  position: absolute;
-  /* top: 20px;
-  left: 300px; */
-  top: var(--addArticleTop);
-  left: var(--addArticleLeft);
-  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
-  border-radius: 5px;
-  background-color: rgb(255, 255, 255);
-  color: darkblue;
-  width: var(--articleW);
-  height: var(--articleH);
-}
-
-.ArticleTitle {
-  top: 31px;
-  position: absolute;
-  margin-left: -140px;
-  font-style: bold;
-  font-size: 25px;
-  line-height: 25px;
-  color: darkblue;
-  width: 250px; 
-}
-
-.ArticleContent {
-  font-size: 20px;
-  line-height: 21px;
-  top: 48px;
-  position: absolute;
-  color:darkblue;
-  margin-left: 10px;
-  width: 250px;
-  word-wrap: break-word;
-}
- 
-.ArticleBy {
-  color: darkblue;
-  width: 250px;
-  position: absolute;
-  bottom: 5px;
-  font-size: 12px;
-  margin-left: -140px;
 }
  
 .formHL {
