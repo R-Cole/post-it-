@@ -472,7 +472,7 @@ body {
 }
 
 .mobile_ArticleId {
-  position: absolute;
+  position: relative;
   top: 3px;
   left: 3px;
   border-radius: 5px;
@@ -496,11 +496,11 @@ body {
  
 .mobile_ArticleBy {
   color: darkblue;
-  /* width: 250px;
-  position: absolute;
+  width: 250px;
+  position: relative;
   bottom: 5px;
   font-size: 12px;
-  margin-left: -140px; */
+  /* margin-left: -140px; */
 }
 
 .mobile_Zoom {
