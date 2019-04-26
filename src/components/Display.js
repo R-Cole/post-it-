@@ -238,6 +238,8 @@ export class Display extends React.Component {
   //Open the add article form
   newArticle = () => {
 
+    window.scrollTo(0, 0);
+
     if(this.state.mode === 'ready'){
 
       root.style.setProperty('--cursorHand','auto'); 

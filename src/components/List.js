@@ -81,7 +81,7 @@ export class List extends React.Component {
            <div>
             <span className='mobile_ArticleTitle'>{item.title}</span>
             {/* <p className='ArticleContent'>{item.content}</p> */}
-            <span className='mobile_ArticleBy'>posted by {item.author}</span>
+            {/* <span className='mobile_ArticleBy'>posted by {item.author}</span> */}
           </div>
           </li>
         
