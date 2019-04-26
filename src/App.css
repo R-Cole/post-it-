@@ -362,17 +362,7 @@ body {
 .mobile_AddContainer {
   display: flex;
 }
-
-
-.mobile_Article {
-  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
-  border-radius: 6px;
-  /* background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102)); */
-  background-image: linear-gradient(rgb(198, 233, 250),rgb(102, 203, 250));
-  width: 300px;
-  height: 70px;
-}
-
+ 
 .mobile_AddArticleContainer {
   position: absolute;
   /* top: 20px;
@@ -460,13 +450,27 @@ body {
   margin-top: 50px;
 }
 
+
+.mobile_Article {
+  display: block;
+  margin: center;
+  filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
+  border-radius: 6px;
+  /* background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102)); */
+  background-image: linear-gradient(rgb(198, 233, 250),rgb(102, 203, 250));
+  width: 300px;
+  height: 70px;
+}
+
 .mobile_ArticleTitle {
-  /* top: 25px;
   position: absolute;
-  margin-left: -140px;
+  left: 20px;
+  top: 5px;
+/*  
+  margin-left: -140px; */
   font-style: bold;
   font-size: 25px;
-  line-height: 25px; */
+  line-height: 25px;
   color: darkblue;
   width: 280px; 
 }
@@ -474,7 +478,7 @@ body {
 .mobile_ArticleId {
   position: relative;
   top: 3px;
-  left: 3px;
+  left: -135px;
   border-radius: 5px;
   background-color: rgb(255, 145, 2);
   color: white;
@@ -495,10 +499,11 @@ body {
 }
  
 .mobile_ArticleBy {
+  position: absolute;
+  left: 35px;
+  top: 50px;
   color: darkblue;
   width: 250px;
-  position: relative;
-  bottom: 5px;
   font-size: 12px;
   /* margin-left: -140px; */
 }
@@ -506,7 +511,7 @@ body {
 .mobile_Zoom {
   position: absolute;
   margin-left: 40px;
-  top: 50px;
+  top: var(--zoom_Y_Location);
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 6px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));

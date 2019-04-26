@@ -70,7 +70,8 @@ export class List extends React.Component {
         
           <li 
             // style={posStyle[handle]}
-            key= {index} 
+            key={index} 
+            id={`note_${handle}`}
             className='mobile_Article'
             onClick={(e)=>this.props.clickToZoom(e,handle)}
           >

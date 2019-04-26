@@ -3,8 +3,7 @@ import React from 'react';
 function ArticleZoom(props){
 
     let handle = props.zoomElement;
-    console.log('handle = ',handle);
-    console.log('articles = ',props.articles);
+     
     let content = null;
 
     content = props.articles.map((item) =>{

@@ -8,7 +8,7 @@ import AddArticleForm from '../components/AddArticleForm';
 import ArticleZoom from '../components/ArticleZoom';
 import { addArticle, editArticle, deleteArticle } from '../actions/action';
 import HandCursor from '../assets/images/hand.png';
-import { isNull } from 'util';
+//import { isNull } from 'util';
 
 const root = document.querySelector(':root');
 root.style.setProperty('--toolBoxTop', '95px');
@@ -16,6 +16,8 @@ root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
+
+root.style.setProperty(`--zoom_Y_Location`,`${0}px`);
 
 
 //Not mobile -- full movement capablilites...
@@ -66,8 +68,6 @@ export class Display extends React.Component {
     
     //article is already zoomed in...
     if(this.state.mode === 'zoomed' && this.props.articles.length > 0 ){
-
-      console.log('this.state.zoomElement = ',this.state.zoomElement);
        
       let handle = this.state.zoomElement;
 
@@ -432,6 +432,16 @@ export class Display extends React.Component {
   
     //not zoomed in... Ready mode
     if(!this.state.zoom && this.state.mode === 'ready'){
+
+      let zoom = document.querySelector(`#note_${handle}`);
+
+      let location = zoom.getBoundingClientRect();
+
+      console.log('zoomY = ',location.top);
+        
+      //set start place for new article based on the default toolbox coords
+      root.style.setProperty(`--zoom_Y_Location`,`${location.top}px`);
+ 
       this.setState({
         mode: 'zoomed',
         zoom: true,
@@ -440,11 +450,38 @@ export class Display extends React.Component {
     }
     //zoomed in... Zoomed mode
     else if(this.state.zoom && this.state.mode === 'zoomed'){
-      this.setState({
-        mode: 'ready',
-        zoom: false,
-        zoomElement: null
-      })
+
+      //same article is selected closes zoom...
+      if(handle === this.state.zoomElement){
+
+        this.setState({
+          mode: 'ready',
+          zoom: false,
+          zoomElement: null
+        })
+ 
+      }
+      //Another article is selected, zoom into tjhat article...
+      else{
+
+        let zoom = document.querySelector(`#note_${handle}`);
+
+        let location = zoom.getBoundingClientRect();
+
+        console.log('zoomY = ',location.top);
+        
+        //set start place for new article based on the default toolbox coords
+        root.style.setProperty(`--zoom_Y_Location`,`${location.top}px`);
+ 
+        this.setState({
+          mode: 'zoomed',
+          zoom: true,
+          zoomElement: handle
+        })
+ 
+      }
+
+      
     }
     
   }
@@ -549,6 +586,12 @@ export class Display extends React.Component {
           initialValues={theArticle}
           mobile={true}
         />}
+         {this.state.zoom &&
+          <ArticleZoom 
+            clickToZoom={this.zoomPost}
+            zoomElement={this.state.zoomElement}
+            articles={this.props.articles}
+          />}
         <ToolBox 
             newArticle={this.newArticle}
             editArticle={this.editArticle} 
@@ -564,12 +607,6 @@ export class Display extends React.Component {
         {/* touchX = {showTouchX}
           touchY = {showTouchY}
           showEventType = {showEventType} */}
-        {this.state.zoom &&
-          <ArticleZoom 
-            clickToZoom={this.zoomPost}
-            zoomElement={this.state.zoomElement}
-            articles={this.props.articles}
-          />}
       </React.Fragment>
  
         return(
