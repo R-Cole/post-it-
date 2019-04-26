@@ -436,13 +436,12 @@ export class Display extends React.Component {
     if(!this.state.zoom && this.state.mode === 'ready'){
 
       let zoom = document.querySelector(`#note_${handle}`);
-
       let location = zoom.getBoundingClientRect();
 
-      console.log('zoomY = ',location.top);
-        
+      let scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+ 
       //set start place for new article based on the default toolbox coords
-      root.style.setProperty(`--zoom_Y_Location`,`${location.top}px`);
+      root.style.setProperty(`--zoom_Y_Location`,`${location.top + scrolled}px`);
  
       this.setState({
         mode: 'zoomed',
@@ -470,10 +469,10 @@ export class Display extends React.Component {
 
         let location = zoom.getBoundingClientRect();
 
-        console.log('zoomY = ',location.top);
-        
+        let scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+  
         //set start place for new article based on the default toolbox coords
-        root.style.setProperty(`--zoom_Y_Location`,`${location.top}px`);
+        root.style.setProperty(`--zoom_Y_Location`,`${location.top + scrolled}px`);
  
         this.setState({
           mode: 'zoomed',
