@@ -30,6 +30,8 @@ else{
   root.style.setProperty('--articleW',`${300}px`);
   root.style.setProperty('--articleH',`${70}px`);
 }
+
+console.log('mobile? ',isMobile);
  
 
 let showTouchX;
@@ -304,19 +306,21 @@ export class Display extends React.Component {
 
       //select post to edit
       if(this.state.mode === 'select'){
+
+       //need to turn sleect OFF if you select nothing....
   
-      this.setState({
-        mode: 'edit',
-        moveElement: null,
-        moveEnabled: false,
-        showAddArticle: true,
-        showHelp: false,
-        editElement: handle
-      })
+        this.setState({
+          mode: 'edit',
+          moveElement: null,
+          moveEnabled: false,
+          showAddArticle: true,
+          showHelp: false,
+          editElement: handle
+        })
  
-      //put add article form on top of current selection 
-      root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
-      root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
+        //put add article form on top of current selection 
+        root.style.setProperty(`--addArticleLeft`,root.style.getPropertyValue(`--articleLeft${handle}`));
+        root.style.setProperty(`--addArticleTop`,root.style.getPropertyValue(`--articleTop${handle}`));
  
       }//end select
  
@@ -491,11 +495,7 @@ export class Display extends React.Component {
 
     //Var holder for the initial values...
     let theArticle;
-
-    console.log('current mode= ',this.state.mode);
-    console.log('current zoom= ',this.state.zoom);
-    console.log('current editElement= ',this.state.editElement);
-    
+ 
     //Populate form with exitsing information for EDIT mode or null for new...
     if(this.state.mode === 'edit'){
 
@@ -504,6 +504,7 @@ export class Display extends React.Component {
       theArticle = this.props.articles.find((item) => item.articleId === handle);
  
     } 
+    //populate form with nothing...
     else {
       theArticle  = {
         articleId: null,
@@ -512,103 +513,99 @@ export class Display extends React.Component {
         author: null
       }
     }
-
-    //Show help screen...
-
-
-      //Desktop version
-      if(!isMobile){
  
+    //Desktop version...
+    if(!isMobile){
        const mainContent = 
         <React.Fragment> 
-      <List 
-        selectedArticle={this.state.moveElement} 
-        clickToEnable={this.clickToEnable} 
-        moveEnabled={this.moveEnabled}
-        mobile={false}
-      />
-      {this.state.showAddArticle && 
-      <AddArticleForm 
-        onSubmit={this.submitForm}
-        deleteForm={this.deleteForm}
-        articleCount={this.props.articles.length}
-        mode={this.state.mode}
-        handle={this.state.editElement}
-        articles={this.props.articles}
-        initialValues={theArticle}
-        mobile={false}
-      />}
-      <ToolBox 
-        newArticle={this.newArticle}
-        editArticle={this.editArticle} 
-        clickToEnable={this.clickToEnable}
-        showHelp={this.showHelp}
-        mobile={false}
-      />
-      <div className='HeadlineContainer'>POST IT!
-        <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
-      </div>
-      {this.state.showHelp && <Help mobile={false}/>} 
-      {/* touchX = {showTouchX}
-        touchY = {showTouchY}
-        showEventType = {showEventType} */}
+        <List 
+          selectedArticle={this.state.moveElement} 
+          clickToEnable={this.clickToEnable} 
+          moveEnabled={this.moveEnabled}
+          mobile={false}
+        />
+        {this.state.showAddArticle && 
+        <AddArticleForm 
+          onSubmit={this.submitForm}
+          deleteForm={this.deleteForm}
+          articleCount={this.props.articles.length}
+          mode={this.state.mode}
+          handle={this.state.editElement}
+          articles={this.props.articles}
+          initialValues={theArticle}
+          mobile={false}
+        />}
+        <ToolBox 
+          newArticle={this.newArticle}
+          editArticle={this.editArticle} 
+          clickToEnable={this.clickToEnable}
+          showHelp={this.showHelp}
+          mobile={false}
+        />
+        <div className='HeadlineContainer'>POST IT!
+          <button className='helpButton' onClick={()=> this.showHelp()}>?</button>
+        </div>
+        {this.state.showHelp && <Help mobile={false} showHelp={this.showHelp}/>} 
+        {/* touchX = {showTouchX}
+            touchY = {showTouchY}
+            showEventType = {showEventType} */}
        
-      </React.Fragment>
+        </React.Fragment>
  
-        return(
+      return(
        
           <div className='displayContainer' onMouseMove={(e)=>this.moveEnabled(e)}>
             {mainContent}
           </div>
      
-        )
+      )
  
-      }
+    }
 
-      //Mobile version
-      if(isMobile){
+    //Mobile version...
+    if(isMobile){
 
         const mainContent = 
-        <React.Fragment> 
-        <List
-          selectedArticle={this.state.moveElement} 
-          clickToZoom={this.zoomPost} 
-          mobile={true}
-        />
-        {this.state.showAddArticle && 
-        <AddArticleForm 
-          className='mobile_AddContainer'
-          onSubmit={this.submitForm}
-          deleteForm={this.deleteForm}
-          articleCount={this.props.articles.length}
-          mode={this.state.mode}
-          handle={this.state.moveElement}
-          articles={this.props.articles}
-          initialValues={theArticle}
-          mobile={true}
-        />}
-         {this.state.zoom &&
+          <React.Fragment> 
+          <List
+            selectedArticle={this.state.moveElement} 
+            clickToZoom={this.zoomPost} 
+            mobile={true}
+          />
+          {this.state.showAddArticle && 
+          <AddArticleForm 
+            className='mobile_AddContainer'
+            onSubmit={this.submitForm}
+            deleteForm={this.deleteForm}
+            articleCount={this.props.articles.length}
+            mode={this.state.mode}
+            handle={this.state.moveElement}
+            articles={this.props.articles}
+            initialValues={theArticle}
+            mobile={true}
+          />}
+          {this.state.zoom &&
           <ArticleZoom 
             clickToZoom={this.zoomPost}
             zoomElement={this.state.zoomElement}
             articles={this.props.articles}
           />}
-        <ToolBox 
+          <ToolBox 
             newArticle={this.newArticle}
             editArticle={this.editArticle} 
             clickToEnable={this.clickToEnable}
             showHelp={this.showHelp}
             mobile={true}
           />
-        <div className='mobile_HeadlineContainer'>
-          POST IT!
-        </div>
-        <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
-        {this.state.showHelp && <Help mobile={true} />} 
-        {/* touchX = {showTouchX}
-          touchY = {showTouchY}
-          showEventType = {showEventType} */}
-      </React.Fragment>
+          <div className='mobile_HeadlineContainer'>
+            POST IT!
+          </div>
+          <button className='mobile_helpButton' onClick={()=> this.showHelp()}>?</button>
+          {this.state.showHelp && <Help mobile={true} showHelp={this.showHelp}/>} 
+          {/* touchX = {showTouchX}
+              touchY = {showTouchY}
+              showEventType = {showEventType} */}
+          </React.Fragment>
  
         return(
           
@@ -616,19 +613,16 @@ export class Display extends React.Component {
           <div className='displayContainer'>
             {mainContent}
           </div>
-          <div className='mobile_Stay'>
-          
-          </div>
           </React.Fragment>
            
         )
- 
-      }
+    }
   
   }
  
 }
-  
+
+//Articles = posts...
 const mapStateToProps = (state) => {
 
   return {

@@ -7,6 +7,10 @@
   
 }
 
+html {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #3b4455;
 }
@@ -447,13 +451,29 @@ body {
 }
 
 .mobile_ListContainer {
-  display: center;
+  text-align: left;
+  display: inline-block;
+  /* margin-left: 0px; */
   list-style: none;
   margin-top: 50px;
 }
 
+/*
+@media (orientation: landscape){
+  .mobile_ListContainer {
+    margin-left: 65px;
+  }
+}
+  
+@media (orientation: portrait) {
+  .mobile_ListContainer {
+    margin-left: 0px;
+  }
+}
+*/
 
 .mobile_Article {
+  float: left;
   display: block;
   margin: center;
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));

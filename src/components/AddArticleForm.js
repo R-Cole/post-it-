@@ -2,6 +2,53 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
  
 export class AddArticleForm extends React.Component{
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+
+      titleInput: null,
+      contentInput: null,
+      authorInput: null
+ 
+    }
+ 
+  }
+
+  handleChange(event){
+ 
+    if(event.currentTarget.name === 'title'){
+
+      this.setState({
+
+        titleInput: event.currentTarget.value
+
+      });
+ 
+    };
+
+    if(event.currentTarget.name === 'content'){
+
+      this.setState({
+
+        contentInput: event.currentTarget.value
+
+      });
+ 
+    };
+
+    if(event.currentTarget.name === 'author'){
+
+      this.setState({
+
+        authorInput: event.currentTarget.value
+
+      });
+ 
+    };
+ 
+  }
  
   render(){
 
@@ -31,6 +78,8 @@ export class AddArticleForm extends React.Component{
             type='text'
             placeholder='Title...'
             maxLength='19'
+            onChange={(e) => this.handleChange(e)}
+            value = {this.state.titleInput}
           />
         </div>
         <div>
@@ -44,6 +93,8 @@ export class AddArticleForm extends React.Component{
             type='text'
             placeholder='Content...'
             maxLength='200'
+            onChange={(e) => this.handleChange(e)}
+            value = {this.state.contentInput}
              
           />
         </div>
@@ -56,6 +107,8 @@ export class AddArticleForm extends React.Component{
             type='text'
             placeholder='Author...'
             maxLength='30'
+            onChange={(e) => this.handleChange(e)}
+            value = {this.state.authorInput}
           />
         </div>
         <div>

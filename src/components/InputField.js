@@ -11,12 +11,11 @@ const InputField = ({
     }) => (
        
         <div>
-        <input {...input} type={type} placeholder={placeholder} onChange={onChange}/>
-        <label>{label}</label> 
+            <input {...input} type={type} placeholder={placeholder} onChange={onChange}/>
+            <label>{label}</label> 
         </div>
- 
-    
-)
+  
+        )
  
 export default InputField;
 
