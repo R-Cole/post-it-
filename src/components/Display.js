@@ -16,7 +16,7 @@ root.style.setProperty('--toolBoxLeft', '15px');
 root.style.setProperty('--cursorHand','auto'); 
 root.style.setProperty(`--addArticleLeft`,`${300}px`);
 root.style.setProperty(`--addArticleTop`,`${20}px`);
-
+root.style.setProperty(`--zoom_X_Location`,`${0}px`);
 root.style.setProperty(`--zoom_Y_Location`,`${0}px`);
 
 
@@ -445,6 +445,7 @@ export class Display extends React.Component {
       let scrolled = document.documentElement.scrollTop || document.body.scrollTop;
  
       //set start place for new article based on the default toolbox coords
+      root.style.setProperty(`--zoom_X_Location`,`${location.left - 40}px`);
       root.style.setProperty(`--zoom_Y_Location`,`${location.top + scrolled}px`);
  
       this.setState({

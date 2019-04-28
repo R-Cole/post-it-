@@ -532,6 +532,7 @@ body {
   position: absolute;
   margin-left: 40px;
   top: var(--zoom_Y_Location);
+  left: var(--zoom_X_Location);
   filter: drop-shadow(0 0 0.55rem rgb(1, 1, 2));
   border-radius: 6px;
   background-image: linear-gradient(rgb(250, 242, 198),rgb(250, 228, 102));
