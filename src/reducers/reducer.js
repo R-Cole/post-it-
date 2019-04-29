@@ -11,7 +11,10 @@ const initialState = {
 //reducer function
 function randyReducer(state = initialState, action) {
 
-  const newArticles = state.articles.concat(action.payload);
+  //concat adds payload data to the existing state
+  //const newArticles = state.articles.concat(action.payload);
+
+  const newArticles = action.payload;
 
   //Add article to articles array
   if(action.type === ADD_ARTICLE){
@@ -19,8 +22,7 @@ function randyReducer(state = initialState, action) {
     //Object assign creates a new object to avoid object mutation
     return Object.assign({}, state, {
 
-      articles: newArticles //concat adds payload data to the existing state
- 
+      articles: [...state.articles, newArticles] 
     });
  
   }

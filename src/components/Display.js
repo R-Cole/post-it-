@@ -400,6 +400,8 @@ export class Display extends React.Component {
 
   showHelp(){
 
+    window.scrollTo(0, 0);
+
     if(!this.state.showHelp){
  
       this.setState({
