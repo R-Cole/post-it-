@@ -393,10 +393,11 @@ body {
 }
 
 .mobile_authorInput {
+  position: relative;
   color: darkblue;
   background-color: rgb(250, 243, 201);
   width: 250px;
-  /* bottom: 5px; */
+  bottom: 5px;
   font-size: 12px;
 }
 
