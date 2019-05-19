@@ -133,6 +133,14 @@ export class Display extends React.Component {
         id = highestIdArr[0].articleId + 1;
    
       }
+
+      let setColor = values.color;
+
+      if(values.color === null){
+
+        setColor = 'yellow';
+
+      }
   
       //set new article
       const newArticle = {
@@ -140,7 +148,8 @@ export class Display extends React.Component {
         articleId: id,
         title: values.title,
         content: values.content,
-        author: values.author
+        author: values.author,
+        color: setColor
  
       }
  
@@ -178,12 +187,21 @@ export class Display extends React.Component {
       
       let handle = this.state.editElement
 
+      let setColor = values.color;
+
+      if(values.color === null){
+
+        setColor = 'yellow';
+
+      }
+
       const editedArticle = {
 
         articleId: handle,
         title: values.title,
         content: values.content,
-        author: values.author
+        author: values.author,
+        color: setColor
  
       }
  

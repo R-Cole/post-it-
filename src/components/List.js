@@ -27,11 +27,30 @@ export class List extends React.Component {
         //is Desktop 
         if(!this.props.mobile){
 
+          let color;
+ 
+          if(item.color === 'yellow'){
+            color = `rgb(250, 242, 198),rgb(250, 228, 102)`;
+          }
+
+          if(item.color === 'blue'){
+            color = `rgb(198, 233, 250),rgb(102, 203, 250)`;
+          }
+
+          if(item.color === 'green'){
+            color = `rgb(197, 250, 136),rgb(174, 255, 81)`;
+          }
+
+          if(item.color === 'pink'){
+            color = `rgb(255, 196, 255),rgb(250, 145, 250)`;
+          }
+
           posStyle[handle] = {
             position: 'absolute',
             top: `var(--articleTop${handle})`,
             left: `var(--articleLeft${handle})`,
-            zIndex: `var(--articleZindex${handle})`
+            zIndex: `var(--articleZindex${handle})`,
+            backgroundImage: `linear-gradient(${color})`
           }
    
           listContent =

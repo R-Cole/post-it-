@@ -10,7 +10,8 @@ export class AddArticleForm extends React.Component{
 
       titleInput: null,
       contentInput: null,
-      authorInput: null
+      authorInput: null,
+      colorInput: 'yellow'
  
     }
  
@@ -18,6 +19,7 @@ export class AddArticleForm extends React.Component{
 
   handleChange(event){
  
+    //Title
     if(event.currentTarget.name === 'title'){
 
       this.setState({
@@ -28,6 +30,7 @@ export class AddArticleForm extends React.Component{
  
     };
 
+    //Content
     if(event.currentTarget.name === 'content'){
 
       this.setState({
@@ -38,11 +41,24 @@ export class AddArticleForm extends React.Component{
  
     };
 
+    //Author
     if(event.currentTarget.name === 'author'){
 
       this.setState({
 
         authorInput: event.currentTarget.value
+
+      });
+ 
+    };
+
+    //Color
+    if(
+      event.currentTarget.name === 'color'){
+
+      this.setState({
+
+        colorInput: event.currentTarget.value
 
       });
  
@@ -55,6 +71,7 @@ export class AddArticleForm extends React.Component{
     let m_AddArticleContainer = 'AddArticleContainer';
     let m_submitFormButton = 'submitFormButton';
     let m_deleteFormButton ='deleteFormButton';
+    let m_contentInput ='contentInput';
 
 
     if(this.props.mobile){
@@ -63,12 +80,62 @@ export class AddArticleForm extends React.Component{
       m_AddArticleContainer = 'mobile_AddArticleContainer';
       m_submitFormButton = 'mobile_submitFormButton';
       m_deleteFormButton ='mobile_deleteFormButton';
-
+      m_contentInput ='mobile_contentInput';
     }
  
     return (
       <React.Fragment>
       <form className={m_AddArticleContainer} onSubmit={this.props.handleSubmit} >
+        
+        {!this.props.mobile
+        ? <div>
+          <label className='formHL' htmlFor='color'>
+          <Field
+            name='color'
+            component='input'
+            type='radio'
+            value='yellow'
+            onChange={(e) => this.handleChange(e)}
+          >
+          </Field>
+            Yellow
+          </label>
+          <label className='formHL' htmlFor='color'>
+          <Field
+            name='color'
+            component='input'
+            type='radio'
+            value='blue'
+            onChange={(e) => this.handleChange(e)}
+          >
+          </Field>
+            Blue
+          </label>
+          <label className='formHL' htmlFor='color'>
+          <Field
+            name='color'
+            component='input'
+            type='radio'
+            value='green'
+            onChange={(e) => this.handleChange(e)}
+          >
+          </Field>
+            Green 
+          </label>
+          <label className='formHL' htmlFor='color'>
+          <Field
+            name='color'
+            component='input'
+            type='radio'
+            value='pink'
+            onChange={(e) => this.handleChange(e)}
+          >
+          </Field>
+            Pink
+          </label>
+        </div>
+      : null}
+        
         <div>
           <label className='formHL' htmlFor='title'></label><br/>
           <Field 
@@ -85,7 +152,7 @@ export class AddArticleForm extends React.Component{
         <div>
           <label className='formHL' htmlFor='content'></label><br/>
           <Field
-            className='contentInput'
+            className={m_contentInput}
             name='content'
             component='textarea'
             rows="6"
@@ -95,7 +162,6 @@ export class AddArticleForm extends React.Component{
             maxLength='200'
             onChange={(e) => this.handleChange(e)}
             value = {this.state.contentInput}
-             
           />
         </div>
         <div >
@@ -114,10 +180,8 @@ export class AddArticleForm extends React.Component{
         <div>
           <button className={m_submitFormButton} type='submit'>SAVE</button>
           <button onClick={()=>this.props.deleteForm()} className={m_deleteFormButton} type='delete'>DELETE</button>
-        </div>
-        
+        </div> 
       </form>
-      
       </React.Fragment>
  
     )
