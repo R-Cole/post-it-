@@ -70,8 +70,9 @@ export class AddArticleForm extends React.Component{
 
     let m_AddArticleContainer = 'AddArticleContainer';
     let m_submitFormButton = 'submitFormButton';
-    let m_deleteFormButton ='deleteFormButton';
-    let m_contentInput ='contentInput';
+    let m_deleteFormButton = 'deleteFormButton';
+    let m_contentInput = 'contentInput';
+    let m_authorInput = 'authorInput';
 
 
     if(this.props.mobile){
@@ -81,6 +82,7 @@ export class AddArticleForm extends React.Component{
       m_submitFormButton = 'mobile_submitFormButton';
       m_deleteFormButton ='mobile_deleteFormButton';
       m_contentInput ='mobile_contentInput';
+      m_authorInput = 'mobile_authorInput';
     }
  
     return (
@@ -167,7 +169,7 @@ export class AddArticleForm extends React.Component{
         <div >
           <label className='formHL' htmlFor='author'></label><br/>
           <Field
-            className='authorInput'
+            className={m_authorInput}
             name='author'
             component='input'
             type='text'
