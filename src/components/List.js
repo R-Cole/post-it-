@@ -27,7 +27,8 @@ export class List extends React.Component {
         //is Desktop 
         if(!this.props.mobile){
 
-          let color;
+          //default is yellow if nothing selected
+          let color = `rgb(250, 242, 198),rgb(250, 228, 102)`;
  
           if(item.color === 'yellow'){
             color = `rgb(250, 242, 198),rgb(250, 228, 102)`;

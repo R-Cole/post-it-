@@ -56,9 +56,17 @@ export class AddArticleForm extends React.Component{
     if(
       event.currentTarget.name === 'color'){
 
+      let setColor = event.currentTarget.value;
+
+      if(!event.currentTarget.value){
+
+        setColor = 'yellow';
+
+      }  
+
       this.setState({
 
-        colorInput: event.currentTarget.value
+        colorInput: setColor
 
       });
  
